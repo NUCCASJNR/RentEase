@@ -23,7 +23,7 @@ class MainUser(AbstractUser, BaseModel):
 
     USER_ROLE = (
         ('tenant', 'Tenant'),
-        ('landlord', 'Landlord'),
+        ('owner', 'Owner'),
         ('agent', 'Agent'),
     )
     email = models.EmailField(unique=True, max_length=50, null=False, blank=False)
@@ -33,7 +33,7 @@ class MainUser(AbstractUser, BaseModel):
     is_verified = models.BooleanField(default=False)
     reset_code = models.CharField(max_length=6, null=True, blank=True)
     verification_code = models.CharField(max_length=6, null=True, blank=True)
-    role = models.CharField(max_length=10, choices=USER_ROLE, default='tenant')
+    role = models.CharField(max_length=10, choices=USER_ROLE)
 
     class Meta:
         db_table = 'users'
