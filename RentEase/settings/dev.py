@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'rental.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('DEV_NAME'),
         'USER': os.getenv('DEV_USER'),
         'PASSWORD': os.getenv('DEV_PASSWORD'),
