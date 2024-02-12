@@ -8,6 +8,16 @@ Contains the apartment model for the rental app
 from rental.models.user import MainUser, BaseModel, models
 
 
+def apartment_image_path(instance, filename):
+    """
+    The path for the apartment image
+    @param instance: The instance of the apartment
+    @param filename: The name of the file
+    @return: The path
+    """
+    return f'apartments/{instance.id}/{filename}'
+
+
 class Apartment(BaseModel):
     """
     The apartment model
@@ -28,3 +38,15 @@ class Apartment(BaseModel):
 
     class Meta:
         db_table = 'apartments'
+
+
+class ApartmentImage(BaseModel):
+    """
+    The apartment image model
+    """
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to=apartment_image_path, null=False, blank=False)
+    is_video = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'apartment_images'
