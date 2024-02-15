@@ -7,7 +7,7 @@ from rental.models.base_model import BaseModel, models
 from django.contrib.auth.hashers import make_password
 
 
-def _hash_password(password: str | int) -> str:
+def hash_password(password: str | int) -> str:
     """
     Hashes the password
     @param password: str | int

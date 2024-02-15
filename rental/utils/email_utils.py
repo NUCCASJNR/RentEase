@@ -63,14 +63,14 @@ class EmailUtils:
         try:
             response = requests.post(url, data=request_payload)
             if response.status_code == 200:
-                if response.json()['status']:
+                if response.json()['success']:
                     redis_client.set_key(key, verification_code, expiry=30)
                     return True
             else:
                 print(f'Error sending verification email to {user.email}')
                 return False
         except Exception as e:
-            print(f'Error sending verification email to {user.email}: {e}')
+            print(f'Error sending verification email to {user.email}: {str(e)}')
             return False
 
     @staticmethod

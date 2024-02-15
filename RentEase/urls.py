@@ -16,11 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from rental.views.auth import SignUpView
-
+from rental.views.auth import (
+    EmailVerficationView,
+    SignUpView
+)
+#  path('auth/', include(router.urls))
 router = DefaultRouter()
 router.register('signup', SignUpView, basename='signup')
+# router.register('verify', EmailVerficationView, basename='verify')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include(router.urls)),
+    path('', include('rental.urls'))
 ]
