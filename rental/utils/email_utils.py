@@ -54,15 +54,18 @@ class EmailUtils:
             "from": getenv("EMAIL_SENDER"),
             "to": user.email,
             "subject": "Verify your account",
-            "bodyHtml": f"Welcome to {user.username},<br> Your verification code is: {verification_code}</br>",
+            "bodyHtml": f"Hello {user.username}, <p>Welcome to REntEase,"
+                        f" Getting apartment couldn't have been much easier"
+                        f"<p> <br> Your verification code is: {verification_code}</br>",
             "isTransactional": False,
         }
 
         try:
             response = requests.post(url, data=request_payload)
             if response.status_code == 200:
-                redis_client.set_key(key, verification_code, expiry=30)
-                return True
+                if response.json()['status']:
+                    redis_client.set_key(key, verification_code, expiry=30)
+                    return True
             else:
                 print(f'Error sending verification email to {user.email}')
                 return False

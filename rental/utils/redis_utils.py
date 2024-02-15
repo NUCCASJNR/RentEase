@@ -3,8 +3,13 @@
 """Contains RedisHandler class"""
 
 import redis
-from datetime import datetime, timedelta
+from datetime import timedelta
 import json
+from os import getenv
+from dotenv import load_dotenv
+load_dotenv()
+
+REDIS_PWD = getenv('REDIS_PWD')
 
 
 class RedisClient:
@@ -13,7 +18,7 @@ class RedisClient:
     """
 
     def __init__(self, host='localhost', port=6379, db=0):
-        self.redis_client = redis.StrictRedis(host=host, port=port, db=db)
+        self.redis_client = redis.StrictRedis(host=host, port=port, db=db, password=REDIS_PWD)
 
     def status(self):
         """
