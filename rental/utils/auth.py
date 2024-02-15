@@ -1,5 +1,5 @@
 from django.contrib.auth.backends import ModelBackend
-from parent.models.user import MainUser
+from rental.models.user import MainUser
 from django.core.exceptions import ObjectDoesNotExist
 
 

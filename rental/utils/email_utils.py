@@ -6,8 +6,8 @@ Handles all utils relating to sending emails and also generating tokens
 from django.conf import settings
 from os import getenv
 import os
-from parent.utils.redis_utils import RedisClient
-from parent.models.user import MainUser as User
+from rental.utils.redis_utils import RedisClient
+from rental.models.user import MainUser as User
 import secrets
 from django.template.loader import render_to_string
 import base64
@@ -41,24 +41,27 @@ class EmailUtils:
     @staticmethod
     def send_verification_email(user, verification_code):
         url = "https://api.elasticemail.com/v2/email/send"
-        context = {
-            'verification_code': verification_code,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-        }
-        html_template = render_to_string("parent/second.html", context)
+        # context = {
+        #     'verification_code': verification_code,
+        #     'first_name': user.first_name,
+        #     'last_name': user.last_name,
+        # }
+        # html_template = render_to_string("parent/second.html", context)
+        redis_client = RedisClient()
+        key = f'user_id:{user.id}:{verification_code}'
         request_payload = {
             "apikey": API_KEY,
             "from": getenv("EMAIL_SENDER"),
             "to": user.email,
             "subject": "Verify your account",
-            "bodyHtml": html_template,
+            "bodyHtml": f"Welcome to {user.username},<br> Your verification code is: {verification_code}</br>",
             "isTransactional": False,
         }
 
         try:
             response = requests.post(url, data=request_payload)
             if response.status_code == 200:
+                redis_client.set_key(key, verification_code, expiry=30)
                 return True
             else:
                 print(f'Error sending verification email to {user.email}')

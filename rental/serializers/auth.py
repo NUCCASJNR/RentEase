@@ -13,4 +13,4 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MainUser
-        fields = ('email', 'password', 'first_name', 'last_name', 'role')
+        fields = ('email', 'password', 'first_name', 'last_name', 'role', 'username')
