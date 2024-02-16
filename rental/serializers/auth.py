@@ -26,10 +26,12 @@ class EmailVerificationSerializer(serializers.ModelSerializer):
         fields = ('verification_code', )
 
 
-class LoginSerializer(serializers.Serializer):
+class LoginSerializer(serializers.ModelSerializer):
     """
-    Login serializer
+    User Login serializer
     """
+    email = serializers.CharField(required=True)
+    password = serializers.CharField(required=True)
 
     class Meta:
         model = MainUser
