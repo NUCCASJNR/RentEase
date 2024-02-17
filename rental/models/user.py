@@ -5,9 +5,10 @@
 from django.contrib.auth.models import AbstractUser
 from rental.models.base_model import BaseModel, models
 from django.contrib.auth.hashers import make_password
+from typing import Union
 
 
-def hash_password(password: str | int) -> str:
+def hash_password(password: Union[str, int]) -> str:
     """
     Hashes the password
     @param password: str | int
