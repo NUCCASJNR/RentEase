@@ -11,18 +11,19 @@ from rental.models.base_model import BaseModel, models
 
 
 def hash_password(password: Union[str, int]) -> str:
-    """
-    Hashes the password
-    @param password: str | int
-    @return: The hashed password
+    """Hashes the password
+
+    :param password: str | int
+    :param password: Union[str: 
+    :param int]: 
+    :returns: The hashed password
+
     """
     return make_password(password)
 
 
 class MainUser(AbstractUser, BaseModel):
-    """
-    The user model
-    """
+    """The user model"""
 
     USER_ROLE = (
         ("tenant", "Tenant"),
@@ -40,6 +41,7 @@ class MainUser(AbstractUser, BaseModel):
     role = models.CharField(max_length=10, choices=USER_ROLE)
 
     class Meta:
+        """ """
         db_table = "users"
 
     USERNAME_FIELD = "email"
