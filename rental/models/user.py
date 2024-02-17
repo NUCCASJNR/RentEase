@@ -13,8 +13,8 @@ def hash_password(password: Union[str, int]) -> str:
     """Hashes the password
 
     :param password: str | int
-    :param password: Union[str: 
-    :param int]: 
+    :param password: Union[str:
+    :param int]:
     :returns: The hashed password
 
     """
