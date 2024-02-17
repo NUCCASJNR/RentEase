@@ -162,7 +162,8 @@ AUTH_USER_MODEL = "rental.MainUser"
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", 'https://rentease-production.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000",
+                        'https://rentease-production.up.railway.app/']
 
 CORS_ALLOW_CREDENTIALS: True
 
