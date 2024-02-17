@@ -164,7 +164,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
-    "https://rentease-production.up.railway.app/",
+    "https://rentease-production.up.railway.app",
 ]
 
 CORS_ALLOW_CREDENTIALS: True
