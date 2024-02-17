@@ -32,7 +32,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["http://localhost:3000", "http://127.0.0.1:8000/"]
+# settings.py
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'http://localhost:3000', 'http://127.0.0.1:8000']
 
 # Application definition
 
@@ -45,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'authtoken',
     "corsheaders",
-    'hub',
+    'rental',
     'rest_framework',
     'rest_framework_simplejwt',
 ]
@@ -144,7 +146,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "RentEase.MainUser"
+AUTH_USER_MODEL = "rental.MainUser"
 
 # CORS_ALLOW_ALL_ORIGINS=True
 
@@ -185,7 +187,7 @@ CORS_ALLOW_HEADERS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'parent.utils.auth.CustomBackend',
+        'rental.utils.auth.CustomBackend',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
