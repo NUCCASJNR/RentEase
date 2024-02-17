@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-#import environ
 from dotenv import load_dotenv
 import os
 from datetime import timedelta
@@ -31,9 +30,9 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["http://localhost:3000", "http://127.0.0.1:8000/"]
 
 # Application definition
 
@@ -51,7 +50,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
 ]
 
-BASE_URL = "http://localhost:8000"
+
 MIDDLEWARE = [
     'honeybadger.contrib.DjangoHoneybadgerMiddleware',
     "corsheaders.middleware.CorsMiddleware",
@@ -64,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Animation.urls'
+ROOT_URLCONF = 'RentEase.urls'
 
 TEMPLATES = [
     {
@@ -82,7 +81,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Animation.wsgi.application'
+WSGI_APPLICATION = 'RentEase.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -100,7 +99,7 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     'NAME': os.getenv('DEV_NAME'),
     #     'USER': os.getenv('DEV_USER'),
-    #     'PASSWORD': os.getenv('DEV_PASSWORD'),
+    #     'PA2SSWORD': os.getenv('DEV_PASSWORD'),
     #     'HOST': os.getenv('DEV_HOST'),
     #     'PORT': os.getenv('PORT'),
     # },
@@ -145,17 +144,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "hub.MainUser"
+AUTH_USER_MODEL = "RentEase.MainUser"
 
 # CORS_ALLOW_ALL_ORIGINS=True
 
 CORS_ALLOW_ALL_ORIGINS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    # "https://rocktea-mall.vercel.app",
-    "https://flip2tech-production.up.railway.app",
-    "http://localhost:5174",
-    "http://localhost:5173",
+    "http://localhost:3000"
 ]
 
 CORS_ALLOW_CREDENTIALS: True
@@ -209,7 +205,7 @@ SIMPLE_JWT = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    'parent.utils.auth.CustomBackend',
+    'rental.utils.auth.CustomBackend',
     # 'django.contrib.auth.backends.ModelBackend',
 ]
 HONEYBADGER = {

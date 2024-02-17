@@ -9,10 +9,10 @@ from os import getenv
 from dotenv import load_dotenv
 load_dotenv()
 
-REDIS_PWD = getenv('REDIS_PWD')
 HOST = getenv('REDIS_HOST')
 PORT = getenv('REDIS_PORT')
 PASSWORD = getenv('REDIS_PASSWORD')
+MODE = getenv('MODE')
 
 
 class RedisClient:
@@ -20,8 +20,11 @@ class RedisClient:
     Redis Client class
     """
 
-    def __init__(self, host='localhost', port=6379, db=0):
-        self.redis_client = redis.StrictRedis(host=HOST, port=PORT, db=db, password=PASSWORD)
+    def __init__(self, db=0):
+        if MODE == 'production':
+            self.redis_client = redis.StrictRedis(host=HOST, port=PORT, db=db, password=PASSWORD)
+        else:
+            self.redis_client = redis.StrictRedis(host='localhost', port=6379, db=db)
 
     def status(self):
         """
