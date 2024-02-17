@@ -40,7 +40,7 @@ ALLOWED_HOSTS = [
     "http://127.0.0.1:8000",
     "0.0.0.0",
     "http://0.0.0.0:8000",
-    "https://rentease-production.up.railway.app",
+    "rentease-production.up.railway.app",
 ]
 
 # Application definition
