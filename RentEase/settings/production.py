@@ -40,7 +40,7 @@ ALLOWED_HOSTS = [
     "http://127.0.0.1:8000",
     "0.0.0.0",
     "http://0.0.0.0:8000",
-    'https://rentease-production.up.railway.app'
+    "https://rentease-production.up.railway.app",
 ]
 
 # Application definition
@@ -162,7 +162,10 @@ AUTH_USER_MODEL = "rental.MainUser"
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", 'https://rentease-production.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "https://rentease-production.up.railway.app/",
+]
 
 CORS_ALLOW_CREDENTIALS: True
 
