@@ -213,7 +213,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 HONEYBADGER = {
     'API_KEY': os.getenv('HONEY_KEY')
-} 
+}
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
