@@ -23,14 +23,12 @@ class MainUser(AbstractUser, BaseModel):
     """
 
     USER_ROLE = (
-        ('tenant', 'Tenant'),
-        ('owner', 'Owner'),
-        ('agent', 'Agent'),
+        ("tenant", "Tenant"),
+        ("owner", "Owner"),
+        ("agent", "Agent"),
     )
-    email = models.EmailField(
-        unique=True, max_length=50, null=False, blank=False)
-    username = models.CharField(
-        max_length=50, null=False, blank=False, unique=True)
+    email = models.EmailField(unique=True, max_length=50, null=False, blank=False)
+    username = models.CharField(max_length=50, null=False, blank=False, unique=True)
     password = models.CharField(max_length=150, null=False, blank=False)
     first_name = models.CharField(max_length=50, null=False, blank=False)
     last_name = models.CharField(max_length=50, null=False, blank=False)
@@ -40,9 +38,9 @@ class MainUser(AbstractUser, BaseModel):
     role = models.CharField(max_length=10, choices=USER_ROLE)
 
     class Meta:
-        db_table = 'users'
+        db_table = "users"
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
 
     REQUIRED_FIELDS = []
 
