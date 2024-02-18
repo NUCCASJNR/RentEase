@@ -211,5 +211,7 @@ AUTHENTICATION_BACKENDS = [
     'rental.utils.auth.CustomBackend',
     # 'django.contrib.auth.backends.ModelBackend',
 ]
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/tmp/'
+MEDIA_URL = '/tmp/'
