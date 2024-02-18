@@ -17,3 +17,13 @@ class ApartmentSerializer(serializers.ModelSerializer):
         fields = ('address', 'owner', 'description', 'number_of_rooms', 'number_of_bathrooms', 'price',
                   'amenities'
                   )
+
+
+class ApartmentImageSerializer(serializers.ModelSerializer):
+    """
+    The apartment image serializer
+    """
+
+    class Meta:
+        model = ApartmentImage
+        fields = ('apartment', 'image')
