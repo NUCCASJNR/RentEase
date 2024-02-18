@@ -2,19 +2,17 @@
 
 """contains all the authentication related views"""
 
+from django.contrib.auth import authenticate, login
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from rental.models.user import MainUser, hash_password
-from rental.serializers.auth import (
-    EmailVerificationSerializer,
-    LoginSerializer,
-    SignUpSerializer,
-)
+from rental.serializers.auth import (EmailVerificationSerializer,
+                                     LoginSerializer, SignUpSerializer)
 from rental.utils.email_utils import EmailUtils
 from rental.utils.redis_utils import RedisClient
-from django.contrib.auth import authenticate, login
-from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class SignUpView(viewsets.ModelViewSet):

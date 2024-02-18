@@ -3,6 +3,7 @@
 """Contains the apartment serializer"""
 
 from rest_framework import serializers
+
 from rental.models.apartment import Apartment, ApartmentImage
 
 

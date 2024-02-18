@@ -3,15 +3,13 @@
 """Contains Apartment views"""
 
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rental.serializers.apartment import (
-    ApartmentSerializer,
-    Apartment,
-    ApartmentImage,
-    ApartmentImageSerializer,
-)
-from rest_framework.permissions import IsAuthenticated
+
+from rental.serializers.apartment import (Apartment, ApartmentImage,
+                                          ApartmentImageSerializer,
+                                          ApartmentSerializer)
 
 
 class AddApartmentView(APIView):
