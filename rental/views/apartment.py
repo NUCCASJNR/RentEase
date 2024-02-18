@@ -42,11 +42,14 @@ class AddApartmentView(APIView):
                     'error': 'You can only add a maximum of 5 images',
                     'status': status.HTTP_400_BAD_REQUEST
                 })
-            apartment = Apartment.custom_save(owner=current_user, **serializer.validated_data)
+            apartment = Apartment.custom_save(
+                owner=current_user, **serializer.validated_data)
             for image in images:
-                serialized_image = ApartmentImageSerializer(data={'apartment': apartment.id, 'image': image})
+                serialized_image = ApartmentImageSerializer(
+                    data={'apartment': apartment.id, 'image': image})
                 if serialized_image.is_valid():
-                    ApartmentImage.custom_save(**serialized_image.validated_data)
+                    ApartmentImage.custom_save(
+                        **serialized_image.validated_data)
                 else:
                     return Response({
                         'error': serialized_image.errors,

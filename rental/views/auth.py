@@ -39,9 +39,11 @@ class SignUpView(viewsets.ModelViewSet):
                 return Response({'error': 'User with this email already exists'}, status=status.HTTP_400_BAD_REQUEST)
             if MainUser.custom_get(**{'username': serializer.validated_data['username']}):
                 return Response({'error': 'User with this username already exists'}, status=status.HTTP_400_BAD_REQUEST)
-            hashed_password = hash_password(serializer.validated_data['password'])
+            hashed_password = hash_password(
+                serializer.validated_data['password'])
             serializer.validated_data['password'] = hashed_password
-            user = MainUser.custom_save(**serializer.validated_data, verification_code=verification_code)
+            user = MainUser.custom_save(
+                **serializer.validated_data, verification_code=verification_code)
             EmailUtils.send_verification_email(user, verification_code)
             return Response({
                 'message': 'You have successfully signed up. Please check your'
