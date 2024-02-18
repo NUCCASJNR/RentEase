@@ -10,13 +10,19 @@ class ApartmentSerializer(serializers.ModelSerializer):
     """
     The apartment serializer
     """
+
     amenities = serializers.JSONField(required=False)
 
     class Meta:
         model = Apartment
-        fields = ('address', 'description', 'number_of_rooms', 'number_of_bathrooms', 'price',
-                  'amenities'
-                  )
+        fields = (
+            "address",
+            "description",
+            "number_of_rooms",
+            "number_of_bathrooms",
+            "price",
+            "amenities",
+        )
 
 
 class ApartmentImageSerializer(serializers.ModelSerializer):
@@ -26,4 +32,4 @@ class ApartmentImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ApartmentImage
-        fields = ('apartment', 'image')
+        fields = ("apartment", "image")
