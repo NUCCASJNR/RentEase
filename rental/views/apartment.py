@@ -54,9 +54,17 @@ class AddApartmentView(APIView):
                     })
             return Response({
                 'message': 'Apartment added successfully',
-                'id': apartment.id,
-                'apartment_images': [image.image.url for image in
-                                     ApartmentImage.filter_objects(apartment=apartment.id)],
+                'apartment': {
+                    'address': apartment.address,
+                    'description': apartment.description,
+                    'number_of_rooms': apartment.number_of_rooms,
+                    'number_of_bathrooms': apartment.number_of_bathrooms,
+                    'price': apartment.price,
+                    'amenities': apartment.amenities,
+                    'availability_status': apartment.availability_status,
+                    'images': [image.image.url for image in
+                               ApartmentImage.filter_objects(apartment=apartment.id)],
+                },
                 'status': status.HTTP_201_CREATED
             })
         return Response({

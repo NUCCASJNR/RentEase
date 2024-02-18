@@ -4,3 +4,11 @@ rental/migrations/__pycache__
 redis.sh
 /RentEase/media/
 /.env
+.idea
+rental/__pycache__
+RentEase/__pycache__
+RentEase/settings/__pycache__
+rental/models/__pycache__
+rental/views/__pycache__
+rental/utils/__pycache__
+rental/serializers/__pycache__
