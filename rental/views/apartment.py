@@ -13,19 +13,20 @@ from rental.serializers.apartment import (Apartment, ApartmentImage,
 
 
 class AddApartmentView(APIView):
-    """
-    Add apartment view
-    """
+    """Add apartment view"""
 
     permission_classes = [IsAuthenticated]
 
     def post(self, reqquest, *args, **kwargs):
-        """
-        Add a new apartment
-        @param reqquest: The request object
-        @param args: The args
-        @param kwargs: The keyword args
-        @return: The response
+        """Add a new apartment
+
+        :param reqquest: The request object
+        :param args: The args
+        :param kwargs: The keyword args
+        :param *args: 
+        :param **kwargs: 
+        :returns: The response
+
         """
         current_user = reqquest.user
         if current_user.role != "owner":

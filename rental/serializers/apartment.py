@@ -8,13 +8,12 @@ from rental.models.apartment import Apartment, ApartmentImage
 
 
 class ApartmentSerializer(serializers.ModelSerializer):
-    """
-    The apartment serializer
-    """
+    """The apartment serializer"""
 
     amenities = serializers.JSONField(required=False)
 
     class Meta:
+        """ """
         model = Apartment
         fields = (
             "address",
@@ -27,10 +26,9 @@ class ApartmentSerializer(serializers.ModelSerializer):
 
 
 class ApartmentImageSerializer(serializers.ModelSerializer):
-    """
-    The apartment image serializer
-    """
+    """The apartment image serializer"""
 
     class Meta:
+        """ """
         model = ApartmentImage
         fields = ("apartment", "image")

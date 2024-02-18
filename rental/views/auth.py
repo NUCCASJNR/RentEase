@@ -16,20 +16,21 @@ from rental.utils.redis_utils import RedisClient
 
 
 class SignUpView(viewsets.ModelViewSet):
-    """
-    Signup View
-    """
+    """Signup View"""
 
     serializer_class = SignUpSerializer
     queryset = MainUser.objects.all()
 
     def create(self, request, *args, **kwargs):
-        """
-        Create a new user
-        @param request: The request object
-        @param args: The args
-        @param kwargs: The keyword args
-        @return: The response
+        """Create a new user
+
+        :param request: The request object
+        :param args: The args
+        :param kwargs: The keyword args
+        :param *args: 
+        :param **kwargs: 
+        :returns: The response
+
         """
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -70,12 +71,15 @@ class EmailVerficationView(APIView):
     serializer_class = EmailVerificationSerializer
 
     def post(self, request, *args, **kwargs):
-        """
-        Create a new user
-        @param request: The request object
-        @param args: The args
-        @param kwargs: The keyword args
-        @return: The response
+        """Create a new user
+
+        :param request: The request object
+        :param args: The args
+        :param kwargs: The keyword args
+        :param *args: 
+        :param **kwargs: 
+        :returns: The response
+
         """
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -121,12 +125,15 @@ class LoginView(APIView):
     serializer_class = LoginSerializer
 
     def post(self, request, *args, **kwargs):
-        """
-        Log in a user
-        @param request: The request object
-        @param args: The args
-        @param kwargs: The keyword args
-        @return: The response
+        """Log in a user
+
+        :param request: The request object
+        :param args: The args
+        :param kwargs: The keyword args
+        :param *args: 
+        :param **kwargs: 
+        :returns: The response
+
         """
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
