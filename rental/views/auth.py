@@ -73,11 +73,11 @@ class EmailVerficationView(APIView):
             key = None
             if user is not None:
                 key = f'user_id:{user.id}:{code}'
-            if user.is_verified:
-                return Response({
-                    'message': 'Your account has already been verified',
-                    'status': 200
-                })
+                if user.is_verified:
+                    return Response({
+                        'message': 'Your account has already been verified',
+                        'status': 200
+                    })
             redis_cli = RedisClient()
             if user and redis_cli.get_key(key):
                 MainUser.custom_update(filter_kwargs={'verification_code': code},

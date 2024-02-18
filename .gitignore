@@ -2,3 +2,5 @@
 .env
 rental/migrations/__pycache__
 redis.sh
+/RentEase/media/
+/.env
