@@ -14,3 +14,4 @@ rental/utils/__pycache__
 rental/serializers/__pycache__
 chat/__pycache__
 chat/migrations/__pycache__
+chat/models/__pycache__
