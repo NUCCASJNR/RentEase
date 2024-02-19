@@ -48,9 +48,11 @@ INSTALLED_APPS = [
     'rental',
     'rest_framework',
     'rest_framework_simplejwt',
-    'drf_yasg'
+    'drf_yasg',
+    'channels',
+    'chat'
 ]
-
+ASGI_APPLICATION = "RentEase.asgi.application"
 BASE_URL = "http://localhost:8000"
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
