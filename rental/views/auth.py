@@ -52,10 +52,15 @@ class SignUpView(viewsets.ModelViewSet):
             })
         else:
             errors = serializer.errors
+            if "username" and "email" in errors:
+                errors = {
+                    "error": "User with this email and username already exists",
+                    "status": status.HTTP_400_BAD_REQUEST
+                    }
             if "email" in errors and errors["email"][0] == "main user with this email already exists.":
                 errors = {
                     "error": "User with this email already exists",
-                    
+                    "status": status.HTTP_400_BAD_REQUEST
                     }
             if "username" in errors and errors["username"][0] == "main user with this username already exists.":
                 errors = {
