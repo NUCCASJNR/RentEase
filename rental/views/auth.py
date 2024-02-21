@@ -37,18 +37,6 @@ class SignUpView(viewsets.ModelViewSet):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             verification_code = EmailUtils.generate_verification_code()
-            if MainUser.custom_get(
-                    **{"email": serializer.validated_data["email"]}):
-                return Response(
-                    {"error": "User with this email already exists"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            if MainUser.custom_get(
-                    **{"username": serializer.validated_data["username"]}):
-                return Response(
-                    {"error": "User with this username already exists"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
             hashed_password = hash_password(
                 serializer.validated_data["password"])
             serializer.validated_data["password"] = hashed_password
@@ -62,10 +50,19 @@ class SignUpView(viewsets.ModelViewSet):
                 "status":
                 status.HTTP_201_CREATED,
             })
-        return Response({
-            "error": serializer.errors,
-            "status": status.HTTP_400_BAD_REQUEST
-        })
+        else:
+            errors = serializer.errors
+            if "email" in errors and errors["email"][0] == "main user with this email already exists.":
+                errors = {
+                    "error": "User with this email already exists",
+                    
+                    }
+            if "username" in errors and errors["username"][0] == "main user with this username already exists.":
+                errors = {
+                    "error": "User with this username already exists",
+                    "status": status.HTTP_400_BAD_REQUEST
+                    }
+            return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class EmailVerficationView(APIView):
