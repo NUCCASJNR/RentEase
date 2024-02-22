@@ -11,12 +11,13 @@ from rental.serializers.apartment import (
     ApartmentSerializer,
     ApartmentImageSerializer
 )
+from rental.utils.permissions import IsOwner
 
 
 class AddApartmentView(APIView):
     """Add apartment view"""
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwner]
 
     def post(self, request, *args, **kwargs):
         """Add a new apartment
@@ -28,11 +29,12 @@ class AddApartmentView(APIView):
 
         """
         current_user = request.user
-        if current_user.role != "owner":
-            return Response({
-                "error": "You are not authorized to add an apartment",
-                "status": status.HTTP_401_UNAUTHORIZED,
-            })
+        print(current_user.role)
+        # if current_user.role != "owner":
+        #     return Response({
+        #         "error": "You are not authorized to add an apartment",
+        #         "status": status.HTTP_401_UNAUTHORIZED,
+        #     })
         serializer = ApartmentSerializer(data=request.data)
         if serializer.is_valid():
             images = request.FILES.getlist("images")
