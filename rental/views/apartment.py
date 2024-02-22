@@ -29,12 +29,6 @@ class AddApartmentView(APIView):
 
         """
         current_user = request.user
-        print(current_user.role)
-        # if current_user.role != "owner":
-        #     return Response({
-        #         "error": "You are not authorized to add an apartment",
-        #         "status": status.HTTP_401_UNAUTHORIZED,
-        #     })
         serializer = ApartmentSerializer(data=request.data)
         if serializer.is_valid():
             images = request.FILES.getlist("images")
