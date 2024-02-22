@@ -5,10 +5,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from rental.serializers.apartment import Apartment
-from rental.serializers.apartment import ApartmentImage
-from rental.serializers.apartment import ApartmentImageSerializer
-from rental.serializers.apartment import ApartmentSerializer
+from rental.serializers.apartment import (
+    Apartment,
+    ApartmentImage,
+    ApartmentSerializer,
+    ApartmentImageSerializer
+)
 
 
 class AddApartmentView(APIView):
@@ -16,26 +18,24 @@ class AddApartmentView(APIView):
 
     permission_classes = [IsAuthenticated]
 
-    def post(self, reqquest, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         """Add a new apartment
 
-        :param reqquest: The request object
+        :param request: The request object
         :param args: The args
         :param kwargs: The keyword args
-        :param *args:
-        :param **kwargs:
         :returns: The response
 
         """
-        current_user = reqquest.user
+        current_user = request.user
         if current_user.role != "owner":
             return Response({
                 "error": "You are not authorized to add an apartment",
                 "status": status.HTTP_401_UNAUTHORIZED,
             })
-        serializer = ApartmentSerializer(data=reqquest.data)
+        serializer = ApartmentSerializer(data=request.data)
         if serializer.is_valid():
-            images = reqquest.FILES.getlist("images")
+            images = request.FILES.getlist("images")
             if len(images) > 5:
                 return Response({
                     "error": "You can only add a maximum of 5 images",
