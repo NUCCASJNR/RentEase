@@ -45,7 +45,7 @@ class ApartmentImage(BaseModel):
     The apartment image model
     """
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to=apartment_image_path, null=False, blank=False)
+    image_url = models.URLField(null=False, blank=False)
     is_video = models.BooleanField(default=False)
 
     class Meta:

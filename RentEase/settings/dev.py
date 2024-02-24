@@ -219,3 +219,8 @@ AUTHENTICATION_BACKENDS = [
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_ROOT = "/tmp/"
 MEDIA_URL = "/tmp/"
+
+# settings.py
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
