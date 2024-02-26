@@ -12,6 +12,7 @@ from rental.serializers.apartment import (
     ApartmentImageSerializer
 )
 from rental.utils.permissions import IsOwner
+from rental.utils.tasks import upload_apartment_images_task
 
 
 class AddApartmentView(APIView):
@@ -37,45 +38,12 @@ class AddApartmentView(APIView):
                     "error": "You can only add a maximum of 5 images",
                     "status": status.HTTP_400_BAD_REQUEST,
                 })
+            image_path = [image.read() for image in images]
             apartment = Apartment.custom_save(owner=current_user,
                                               **serializer.validated_data)
-            for image in images:
-                serialized_image = ApartmentImageSerializer(
-                    data={
-                        "apartment": apartment.id,
-                        "image": image
-                    })
-                if serialized_image.is_valid():
-                    ApartmentImage.custom_save(
-                        **serialized_image.validated_data)
-                else:
-                    return Response({
-                        "error": serialized_image.errors,
-                        "status": status.HTTP_400_BAD_REQUEST,
-                    })
+            upload_apartment_images_task.delay(str(apartment.id), image_path)
             return Response({
                 "message": "Apartment added successfully",
-                "apartment": {
-                    "address":
-                    apartment.address,
-                    "description":
-                    apartment.description,
-                    "number_of_rooms":
-                    apartment.number_of_rooms,
-                    "number_of_bathrooms":
-                    apartment.number_of_bathrooms,
-                    "price":
-                    apartment.price,
-                    "amenities":
-                    apartment.amenities,
-                    "availability_status":
-                    apartment.availability_status,
-                    "images": [
-                        image.image.url
-                        for image in ApartmentImage.filter_objects(
-                            apartment=apartment.id)
-                    ],
-                },
                 "status": status.HTTP_201_CREATED,
             })
         return Response({
