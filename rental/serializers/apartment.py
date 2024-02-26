@@ -13,6 +13,7 @@ class ApartmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         """ """
+
         model = Apartment
         fields = (
             "address",
@@ -29,5 +30,6 @@ class ApartmentImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         """ """
+
         model = ApartmentImage
         fields = ("apartment", "image")

@@ -9,7 +9,7 @@ from rental.serializers.apartment import (
     Apartment,
     ApartmentImage,
     ApartmentSerializer,
-    ApartmentImageSerializer
+    ApartmentImageSerializer,
 )
 from rental.utils.permissions import IsOwner
 from rental.utils.tasks import upload_apartment_images_task
@@ -34,19 +34,23 @@ class AddApartmentView(APIView):
         if serializer.is_valid():
             images = request.FILES.getlist("images")
             if len(images) > 5:
-                return Response({
-                    "error": "You can only add a maximum of 5 images",
-                    "status": status.HTTP_400_BAD_REQUEST,
-                })
+                return Response(
+                    {
+                        "error": "You can only add a maximum of 5 images",
+                        "status": status.HTTP_400_BAD_REQUEST,
+                    }
+                )
             image_path = [image.read() for image in images]
-            apartment = Apartment.custom_save(owner=current_user,
-                                              **serializer.validated_data)
+            apartment = Apartment.custom_save(
+                owner=current_user, **serializer.validated_data
+            )
             upload_apartment_images_task.delay(str(apartment.id), image_path)
-            return Response({
-                "message": "Apartment added successfully",
-                "status": status.HTTP_201_CREATED,
-            })
-        return Response({
-            "error": serializer.errors,
-            "status": status.HTTP_400_BAD_REQUEST
-        })
+            return Response(
+                {
+                    "message": "Apartment added successfully",
+                    "status": status.HTTP_201_CREATED,
+                }
+            )
+        return Response(
+            {"error": serializer.errors, "status": status.HTTP_400_BAD_REQUEST}
+        )

@@ -29,11 +29,14 @@ class SendMessageView(views.APIView):
         receiver = receiver
         message = request.data.get("message", "")
         if not message:
-            return Response({"message": "Message cannot be empty"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"message": "Message cannot be empty"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         if sender == receiver:
-            return Response({"message": "You cannot send a message to yourself"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"message": "You cannot send a message to yourself"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         Message.custom_save(sender=sender, receiver=receiver, message=message)
-        return Response({
-            "message": "Message sent",
-            "status": status.HTTP_201_CREATED
-        })
+        return Response({"message": "Message sent", "status": status.HTTP_201_CREATED})

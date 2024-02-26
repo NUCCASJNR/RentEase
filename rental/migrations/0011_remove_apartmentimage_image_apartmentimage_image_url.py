@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('rental', '0010_alter_mainuser_username'),
+        ("rental", "0010_alter_mainuser_username"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='apartmentimage',
-            name='image',
+            model_name="apartmentimage",
+            name="image",
         ),
         migrations.AddField(
-            model_name='apartmentimage',
-            name='image_url',
+            model_name="apartmentimage",
+            name="image_url",
             field=models.URLField(default=1),
             preserve_default=False,
         ),
