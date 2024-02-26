@@ -1,6 +1,7 @@
 #!/usr`/bin/env python3
-
-from rental.models.user import BaseModel, MainUser, models
+from rental.models.user import BaseModel
+from rental.models.user import MainUser
+from rental.models.user import models
 
 
 class Message(BaseModel):

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-
 """Chat views."""
-
-
-from rest_framework import generics, status, views
+from rest_framework import generics
+from rest_framework import status
+from rest_framework import views
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from chat.serializers.chat import Message, MessageSerializer
+from chat.serializers.chat import Message
+from chat.serializers.chat import MessageSerializer
 
 
 class MessageListViiew(generics.ListCreateAPIView):

@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-
 """
 Contains the apartment model for the rental app
 """
-
-
-from rental.models.user import BaseModel, MainUser, models
+from rental.models.user import BaseModel
+from rental.models.user import MainUser
+from rental.models.user import models
 
 
 def apartment_image_path(instance, filename):

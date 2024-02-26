@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-
 """Chat serializers."""
-
-
 from rest_framework import serializers
 
 from chat.models.chat import Message
