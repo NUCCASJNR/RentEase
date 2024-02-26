@@ -4,6 +4,7 @@
 
 
 from rest_framework import serializers
+
 from rental.models.booking import Booking
 
 

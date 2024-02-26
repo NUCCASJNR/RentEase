@@ -5,12 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from rental.serializers.apartment import (
-    Apartment,
-    ApartmentImage,
-    ApartmentSerializer,
-    ApartmentImageSerializer,
-)
+from rental.serializers.apartment import (Apartment, ApartmentImage,
+                                          ApartmentImageSerializer,
+                                          ApartmentSerializer)
 from rental.utils.permissions import IsOwner
 from rental.utils.tasks import upload_apartment_images_task
 

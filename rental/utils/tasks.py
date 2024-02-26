@@ -2,10 +2,12 @@
 
 """Celery task handler"""
 
-from rental.utils.upload import upload_images_to_imgur
-from rental.models.apartment import ApartmentImage, Apartment
-from celery import shared_task
 import logging
+
+from celery import shared_task
+
+from rental.models.apartment import Apartment, ApartmentImage
+from rental.utils.upload import upload_images_to_imgur
 
 logger = logging.getLogger(__name__)
 

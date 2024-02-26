@@ -4,9 +4,10 @@
 
 
 from rest_framework import generics, status, views
-from chat.serializers.chat import MessageSerializer, Message
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+
+from chat.serializers.chat import Message, MessageSerializer
 
 
 class MessageListViiew(generics.ListCreateAPIView):

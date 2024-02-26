@@ -3,7 +3,9 @@
 """Celery configuration"""
 
 from __future__ import absolute_import, unicode_literals
+
 import os
+
 from celery import Celery
 
 # os.environ['DJANGO_SETTINGS_MODULE'] = os.getenv('DJANGO_SETTINGS_MODULE', 'RentEase.settings.dev')

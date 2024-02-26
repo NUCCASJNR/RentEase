@@ -2,10 +2,11 @@
 
 """Contains image upload utilities"""
 
-from os import getenv
-from dotenv import load_dotenv
-import requests
 import base64
+from os import getenv
+
+import requests
+from dotenv import load_dotenv
 
 load_dotenv()
 

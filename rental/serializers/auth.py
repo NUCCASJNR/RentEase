@@ -3,6 +3,7 @@
 """contains authentication related serializers"""
 
 from rest_framework import serializers
+
 from rental.models.user import MainUser
 
 

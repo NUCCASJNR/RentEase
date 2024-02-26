@@ -5,7 +5,7 @@ Contains the apartment model for the rental app
 """
 
 
-from rental.models.user import MainUser, BaseModel, models
+from rental.models.user import BaseModel, MainUser, models
 
 
 def apartment_image_path(instance, filename):
