@@ -17,6 +17,7 @@ class MessageListViiew(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        """ """
         sender = self.request.user
         receiver = self.kwargs["receiver"]
         return Message.filter_objects(sender=sender, receiver=receiver)
@@ -26,6 +27,12 @@ class SendMessageView(views.APIView):
     """Send message view."""
 
     def post(self, request, receiver):
+        """
+
+        :param request: 
+        :param receiver: 
+
+        """
         sender = request.user
         receiver = receiver
         message = request.data.get("message", "")

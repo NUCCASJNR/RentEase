@@ -14,11 +14,12 @@ IMGUR_CLIENT_ID = getenv("IMGUR_CLIENT_ID")
 
 
 def upload_images_to_imgur(images, apartment_id):
-    """
-    Uploads an image to imgur
+    """Uploads an image to imgur
+
     :param images: The images to upload
     :param apartment_id: The id of the image
-    :return: The link to the uploaded image
+    :returns: The link to the uploaded image
+
     """
     uploaded_images_url = []
     url = "https://api.imgur.com/3/image"

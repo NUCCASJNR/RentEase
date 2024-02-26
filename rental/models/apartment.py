@@ -9,19 +9,18 @@ from rental.models.user import BaseModel, MainUser, models
 
 
 def apartment_image_path(instance, filename):
-    """
-    The path for the apartment image
-    @param instance: The instance of the apartment
-    @param filename: The name of the file
-    @return: The path
+    """The path for the apartment image
+
+    :param instance: The instance of the apartment
+    :param filename: The name of the file
+    :returns: The path
+
     """
     return f"apartments/{instance.id}/{filename}"
 
 
 class Apartment(BaseModel):
-    """
-    The apartment model
-    """
+    """The apartment model"""
 
     AVAILABILITY_STATUS = (
         ("available", "Available"),
@@ -44,13 +43,12 @@ class Apartment(BaseModel):
     )
 
     class Meta:
+        """ """
         db_table = "apartments"
 
 
 class ApartmentImage(BaseModel):
-    """
-    The apartment image model
-    """
+    """The apartment image model"""
 
     apartment = models.ForeignKey(
         Apartment, on_delete=models.CASCADE, related_name="images"
@@ -59,4 +57,5 @@ class ApartmentImage(BaseModel):
     is_video = models.BooleanField(default=False)
 
     class Meta:
+        """ """
         db_table = "apartment_images"

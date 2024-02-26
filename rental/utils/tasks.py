@@ -14,11 +14,12 @@ logger = logging.getLogger(__name__)
 
 @shared_task
 def upload_apartment_images_task(apartment_id, images):
-    """
-    Task to upload apartment images to imgur
+    """Task to upload apartment images to imgur
+
     :param apartment_id: The id of the apartment
     :param images: The images to upload
-    :return: None
+    :returns: None
+
     """
     uploaded_images_url = []
     try:

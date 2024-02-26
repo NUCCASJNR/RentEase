@@ -8,33 +8,30 @@ from rental.models.user import MainUser
 
 
 class SignUpSerializer(serializers.ModelSerializer):
-    """
-    Signup serializer
-    """
+    """Signup serializer"""
 
     class Meta:
+        """ """
         model = MainUser
         fields = ("email", "password", "first_name", "last_name", "role", "username")
 
 
 class EmailVerificationSerializer(serializers.ModelSerializer):
-    """
-    Email verification Serializer
-    """
+    """Email verification Serializer"""
 
     class Meta:
+        """ """
         model = MainUser
         fields = ("verification_code",)
 
 
 class LoginSerializer(serializers.ModelSerializer):
-    """
-    User Login serializer
-    """
+    """User Login serializer"""
 
     email = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
 
     class Meta:
+        """ """
         model = MainUser
         fields = ("email", "password")

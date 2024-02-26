@@ -11,6 +11,4 @@ from rental.serializers.booking import Booking, BookingSerializer
 
 
 class BookReviewView(APIView):
-    """
-    View for booking a review for an apartment
-    """
+    """View for booking a review for an apartment"""
