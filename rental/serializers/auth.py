@@ -11,7 +11,8 @@ class SignUpSerializer(serializers.ModelSerializer):
     class Meta:
         """ """
         model = MainUser
-        fields = ("email", "password", "first_name", "last_name", "role", "username")
+        fields = ("email", "password", "first_name", "last_name", "role",
+                  "username")
 
 
 class EmailVerificationSerializer(serializers.ModelSerializer):
@@ -20,7 +21,7 @@ class EmailVerificationSerializer(serializers.ModelSerializer):
     class Meta:
         """ """
         model = MainUser
-        fields = ("verification_code",)
+        fields = ("verification_code", )
 
 
 class LoginSerializer(serializers.ModelSerializer):

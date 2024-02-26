@@ -28,8 +28,7 @@ def upload_apartment_images_task(apartment_id, images):
                 **{
                     "apartment": Apartment.objects.get(id=apartment_id),
                     "image_url": image_url,
-                }
-            )
+                })
     except Exception as e:
         logging.error(f"Error uploading apartment images due to: {str(e)}")
     return {

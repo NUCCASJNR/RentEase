@@ -47,4 +47,7 @@ class SendMessageView(views.APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         Message.custom_save(sender=sender, receiver=receiver, message=message)
-        return Response({"message": "Message sent", "status": status.HTTP_201_CREATED})
+        return Response({
+            "message": "Message sent",
+            "status": status.HTTP_201_CREATED
+        })

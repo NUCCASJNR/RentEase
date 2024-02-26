@@ -27,19 +27,20 @@ class Apartment(BaseModel):
         ("rented", "Rented"),
     )
     address = models.CharField(max_length=100, null=False, blank=False)
-    owner = models.ForeignKey(
-        MainUser, on_delete=models.CASCADE, related_name="apartments"
-    )
+    owner = models.ForeignKey(MainUser,
+                              on_delete=models.CASCADE,
+                              related_name="apartments")
     description = models.TextField(null=False, blank=False)
     number_of_rooms = models.IntegerField(null=False, blank=False)
     number_of_bathrooms = models.IntegerField(null=False, blank=False)
-    price = models.DecimalField(
-        max_digits=10, decimal_places=2, null=False, blank=False
-    )
+    price = models.DecimalField(max_digits=10,
+                                decimal_places=2,
+                                null=False,
+                                blank=False)
     amenities = models.JSONField(null=True, blank=True)
-    availability_status = models.CharField(
-        max_length=10, choices=AVAILABILITY_STATUS, default="pending"
-    )
+    availability_status = models.CharField(max_length=10,
+                                           choices=AVAILABILITY_STATUS,
+                                           default="pending")
 
     class Meta:
         """ """
@@ -49,9 +50,9 @@ class Apartment(BaseModel):
 class ApartmentImage(BaseModel):
     """The apartment image model"""
 
-    apartment = models.ForeignKey(
-        Apartment, on_delete=models.CASCADE, related_name="images"
-    )
+    apartment = models.ForeignKey(Apartment,
+                                  on_delete=models.CASCADE,
+                                  related_name="images")
     image_url = models.URLField(null=False, blank=False)
     is_video = models.BooleanField(default=False)
 
