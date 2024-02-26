@@ -24,8 +24,8 @@ class AddApartmentView(APIView):
         :param request: The request object
         :param args: The args
         :param kwargs: The keyword args
-        :param *args: 
-        :param **kwargs: 
+        :param *args:
+        :param **kwargs:
         :returns: The response
 
         """

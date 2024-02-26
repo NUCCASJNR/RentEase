@@ -29,8 +29,8 @@ class SendMessageView(views.APIView):
     def post(self, request, receiver):
         """
 
-        :param request: 
-        :param receiver: 
+        :param request:
+        :param receiver:
 
         """
         sender = request.user
