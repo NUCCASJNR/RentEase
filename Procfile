@@ -1,1 +1,1 @@
-web: sh railway.sh
+web: ./railway.sh
