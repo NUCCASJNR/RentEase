@@ -28,3 +28,6 @@ sqlparse==0.4.4
 typing_extensions==4.9.0
 uritemplate==4.1.1
 urllib3==2.1.0
+celery==5.3.6
+channels~=4.0.0
+celery~=5.3.6
