@@ -56,17 +56,17 @@ class SignUpView(viewsets.ModelViewSet):
                 errors = {
                     "error": "User with this email and username already exists",
                     "status": status.HTTP_400_BAD_REQUEST
-                    }
+                }
             if "email" in errors and errors["email"][0] == "main user with this email already exists.":
                 errors = {
                     "error": "User with this email already exists",
                     "status": status.HTTP_400_BAD_REQUEST
-                    }
+                }
             if "username" in errors and errors["username"][0] == "main user with this username already exists.":
                 errors = {
                     "error": "User with this username already exists",
                     "status": status.HTTP_400_BAD_REQUEST
-                    }
+                }
             return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
 

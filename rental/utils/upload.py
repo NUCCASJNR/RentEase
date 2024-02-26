@@ -32,7 +32,8 @@ def upload_images_to_imgur(images, apartment_id):
             "title": f"Apartment image: {apartment_id}"
         }
         try:
-            response = requests.post(url, json=request_payload, headers=headers)
+            response = requests.post(
+                url, json=request_payload, headers=headers)
             if response.status_code == 200 and response.json()['success']:
                 uploaded_images_url.append(response.json()['data']['link'])
             else:

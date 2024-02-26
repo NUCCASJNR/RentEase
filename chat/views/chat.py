@@ -9,13 +9,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 
-
 class MessageListViiew(generics.ListCreateAPIView):
     """Message list view."""
 
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated]
-    
+
     def get_queryset(self):
         sender = self.request.user
         receiver = self.kwargs["receiver"]
@@ -24,7 +23,7 @@ class MessageListViiew(generics.ListCreateAPIView):
 
 class SendMessageView(views.APIView):
     """Send message view."""
-    
+
     def post(self, request, receiver):
         sender = request.user
         receiver = receiver
@@ -34,7 +33,7 @@ class SendMessageView(views.APIView):
         if sender == receiver:
             return Response({"message": "You cannot send a message to yourself"}, status=status.HTTP_400_BAD_REQUEST)
         Message.custom_save(sender=sender, receiver=receiver, message=message)
-        return Response({          
+        return Response({
             "message": "Message sent",
             "status": status.HTTP_201_CREATED
         })
