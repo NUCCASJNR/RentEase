@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import subprocess
 import os
 import signal
+import subprocess
 
 
 def run_gunicorn():
