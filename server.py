@@ -8,16 +8,16 @@ import signal
 def run_gunicorn():
     """Start Gunicorn server."""
     subprocess.Popen(
-        ['gunicorn', 'RentEase.wsgi', '--log-file', '-'],
-        preexec_fn=os.setsid  # To run in a new process group
+        ["gunicorn", "RentEase.wsgi", "--log-file", "-"],
+        preexec_fn=os.setsid,  # To run in a new process group
     )
 
 
 def run_celery():
     """Start Celery worker."""
     subprocess.Popen(
-        ['celery', '-A', 'RentEase', 'worker', '--loglevel=INFO'],
-        preexec_fn=os.setsid  # To run in a new process group
+        ["celery", "-A", "RentEase", "worker", "--loglevel=INFO"],
+        preexec_fn=os.setsid,  # To run in a new process group
     )
 
 
