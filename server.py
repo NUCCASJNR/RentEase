@@ -22,7 +22,8 @@ def run_celery():
 
 def stop_processes():
     """Stop all processes."""
-    os.killpg(0, signal.SIGKILL)  # Kills all processes in the current process group
+    os.killpg(
+        0, signal.SIGKILL)  # Kills all processes in the current process group
 
 
 if __name__ == "__main__":
