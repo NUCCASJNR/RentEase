@@ -1,1 +1,1 @@
-web: ./railway.sh
+web: python3 server.py
