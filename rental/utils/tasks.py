@@ -21,6 +21,7 @@ def upload_apartment_images_task(apartment_id, images):
     uploaded_images_url = []
     try:
         uploaded_images_url = upload_images_to_imgur(images, apartment_id)
+        print(f'urls: {uploaded_images_url}')
         for image_url in uploaded_images_url:
             ApartmentImage.custom_save(**{
                 'apartment': Apartment.objects.get(id=apartment_id),

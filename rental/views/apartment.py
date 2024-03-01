@@ -1,36 +1,34 @@
 #!/usr/bin/env python3
+
 """Contains Apartment views"""
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from rental.serializers.apartment import (
     Apartment,
-    ApartmentImage,
     ApartmentSerializer,
-    ApartmentImageSerializer
 )
 from rental.utils.permissions import IsOwner
 from rental.utils.tasks import upload_apartment_images_task
 
 
-class AddApartmentView(APIView):
-    """Add apartment view"""
-
+class AddApartmentViewset(viewsets.ModelViewSet):
+    queryset = Apartment.get_all()
+    serializer_class = ApartmentSerializer
     permission_classes = [IsAuthenticated, IsOwner]
 
-    def post(self, request, *args, **kwargs):
-        """Add a new apartment
-
-        :param request: The request object
-        :param args: The args
-        :param kwargs: The keyword args
-        :returns: The response
-
+    def create(self, request, *args, **kwargs):
         """
+        View for creating apartment
+        @param request: request parameter
+        @param args: request args
+        @param kwargs: request kwrags
+        @return: The details of the apartment created
+        """
+        serializer = self.serializer_class(data=request.data)
         current_user = request.user
-        serializer = ApartmentSerializer(data=request.data)
         if serializer.is_valid():
             images = request.FILES.getlist("images")
             if len(images) > 5:
@@ -50,3 +48,4 @@ class AddApartmentView(APIView):
             "error": serializer.errors,
             "status": status.HTTP_400_BAD_REQUEST
         })
+
