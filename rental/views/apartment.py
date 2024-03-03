@@ -13,17 +13,21 @@ from RentEase import celery_app
 
 
 class AddApartmentViewset(viewsets.ModelViewSet):
+    """ """
     queryset = Apartment.get_all()
     serializer_class = ApartmentSerializer
     permission_classes = [IsAuthenticated, IsOwner]
 
     def create(self, request, *args, **kwargs):
-        """
-        View for creating apartment
-        @param request: request parameter
-        @param args: request args
-        @param kwargs: request kwrags
-        @return: The details of the apartment created
+        """View for creating apartment
+
+        :param request: request parameter
+        :param args: request args
+        :param kwargs: request kwrags
+        :param *args: 
+        :param **kwargs: 
+        :returns: The details of the apartment created
+
         """
         serializer = self.serializer_class(data=request.data)
         current_user = request.user
@@ -56,10 +60,11 @@ class AddApartmentViewset(viewsets.ModelViewSet):
         )
 
     def update(self, request, *args, **kwargs):
-        """
-        View for updating an apartment
-        @param request:
-        @param args:
-        @param kwargs:
-        @return:
+        """View for updating an apartment
+
+        :param request: param args:
+        :param kwargs: return:
+        :param *args: 
+        :param **kwargs: 
+
         """

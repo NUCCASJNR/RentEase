@@ -16,6 +16,13 @@ IMGUR_CLIENT_ID = getenv("IMGUR_CLIENT_ID")
 
 
 def resize_image(image, max_width=800, max_height=600):
+    """
+
+    :param image: 
+    :param max_width:  (Default value = 800)
+    :param max_height:  (Default value = 600)
+
+    """
     img = Image.open(image)
     img.thumbnail((max_width, max_height), Image.ANTIALIAS)
     output = io.BytesIO()
@@ -25,6 +32,12 @@ def resize_image(image, max_width=800, max_height=600):
 
 
 def upload_images_to_imgur(images, apartment_id):
+    """
+
+    :param images: 
+    :param apartment_id: 
+
+    """
     uploaded_images_url = []
     url = "https://api.imgur.com/3/image"
     headers = {"Authorization": f"Client-ID {IMGUR_CLIENT_ID}"}

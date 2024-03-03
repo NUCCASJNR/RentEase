@@ -20,7 +20,13 @@ class SignUpView(viewsets.ModelViewSet):
     queryset = MainUser.objects.all()
 
     def create(self, request, *args, **kwargs):
-        """Create a new user"""
+        """Create a new user
+
+        :param request: 
+        :param *args: 
+        :param **kwargs: 
+
+        """
 
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -76,6 +82,8 @@ class EmailVerficationView(APIView):
         :param request: The request object
         :param args: The args
         :param kwargs: The keyword args
+        :param *args: 
+        :param **kwargs: 
         :returns: The response
 
         """
@@ -128,8 +136,8 @@ class LoginView(APIView):
         :param request: The request object
         :param args: The args
         :param kwargs: The keyword args
-        :param *args:
-        :param **kwargs:
+        :param *args: 
+        :param **kwargs: 
         :returns: The response
 
         """

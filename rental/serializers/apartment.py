@@ -26,7 +26,11 @@ class ApartmentSerializer(serializers.ModelSerializer):
         )
 
     def get_image_urls(self, obj):
-        """Custom method to get image URLs"""
+        """Custom method to get image URLs
+
+        :param obj: 
+
+        """
         print(obj.id)
         images = ApartmentImage.objects.filter(apartment=obj.id)
         if images is not None:

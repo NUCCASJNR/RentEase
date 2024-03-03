@@ -15,11 +15,12 @@ logger = logging.getLogger(__name__)
 
 @shared_task
 def upload_apartment_images_task(apartment_id, images):
-    """
-    Task to upload apartment images to imgur
+    """Task to upload apartment images to imgur
+
     :param apartment_id: The id of the apartment
     :param images: The images to upload
-    :return: None
+    :returns: None
+
     """
     try:
         uploaded_images_urls = upload_images_to_imgur(images, apartment_id)
@@ -43,6 +44,12 @@ def upload_apartment_images_task(apartment_id, images):
 
 @shared_task
 def send_verification_email_async(user, verification_code):
+    """
+
+    :param user: 
+    :param verification_code: 
+
+    """
     EmailUtils.send_verification_email(user, verification_code)
 
 
