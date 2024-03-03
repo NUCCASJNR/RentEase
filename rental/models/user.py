@@ -2,10 +2,12 @@
 
 """User model for the rental app"""
 
-from django.contrib.auth.models import AbstractUser
-from rental.models.base_model import BaseModel, models
-from django.contrib.auth.hashers import make_password
 from typing import Union
+
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import AbstractUser
+
+from rental.models.base_model import BaseModel, models
 
 
 def hash_password(password: Union[str, int]) -> str:

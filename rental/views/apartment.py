@@ -5,14 +5,11 @@ from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from RentEase import celery_app
 
-from rental.serializers.apartment import (
-    Apartment,
-    ApartmentSerializer,
-)
+from rental.serializers.apartment import Apartment, ApartmentSerializer
 from rental.utils.permissions import IsOwner
 from rental.utils.tasks import upload_apartment_images_task
+from RentEase import celery_app
 
 
 class AddApartmentViewset(viewsets.ModelViewSet):

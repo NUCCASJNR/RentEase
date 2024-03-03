@@ -15,10 +15,11 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from rental.views.auth import SignUpView
+
 from rental.views.apartment import AddApartmentViewset
+from rental.views.auth import SignUpView
 
 #  path('auth/', include(router.urls))
 router = DefaultRouter()
