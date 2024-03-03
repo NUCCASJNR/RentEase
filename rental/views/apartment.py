@@ -60,4 +60,3 @@ class AddApartmentViewset(viewsets.ModelViewSet):
         @param kwargs:
         @return:
         """
-

@@ -25,7 +25,8 @@ def upload_apartment_images_task(apartment_id, images):
         apartment = Apartment.objects.get(id=apartment_id)
         apartment_images = []
         for image_url in uploaded_images_urls:
-            apartment_images.append(ApartmentImage(apartment=apartment, image_url=image_url))
+            apartment_images.append(ApartmentImage(
+                apartment=apartment, image_url=image_url))
         ApartmentImage.objects.bulk_create(apartment_images)
         return {
             "message": "Apartment images uploaded successfully",

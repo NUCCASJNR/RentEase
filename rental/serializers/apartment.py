@@ -30,7 +30,9 @@ class ApartmentSerializer(serializers.ModelSerializer):
         print(obj.id)
         images = ApartmentImage.objects.filter(apartment=obj.id)
         if images is not None:
-            image_urls = [ApartmentImage.to_dict(image)['image_url'] for image in images]  # Extract URLs of all images
+            # Extract URLs of all images
+            image_urls = [ApartmentImage.to_dict(
+                image)['image_url'] for image in images]
             return image_urls
         else:
             return []
