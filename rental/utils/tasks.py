@@ -45,8 +45,8 @@ def upload_apartment_images_task(apartment_id, images):
 def send_verification_email_async(user, verification_code):
     """
 
-    :param user: 
-    :param verification_code: 
+    :param user:
+    :param verification_code:
 
     """
     EmailUtils.send_verification_email(user, verification_code)

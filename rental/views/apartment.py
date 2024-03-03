@@ -25,8 +25,8 @@ class AddApartmentViewset(viewsets.ModelViewSet):
         :param request: request parameter
         :param args: request args
         :param kwargs: request kwrags
-        :param *args: 
-        :param **kwargs: 
+        :param *args:
+        :param **kwargs:
         :returns: The details of the apartment created
 
         """
@@ -65,7 +65,7 @@ class AddApartmentViewset(viewsets.ModelViewSet):
 
         :param request: param args:
         :param kwargs: return:
-        :param *args: 
-        :param **kwargs: 
+        :param *args:
+        :param **kwargs:
 
         """

@@ -27,9 +27,9 @@ class SignUpView(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """Create a new user
 
-        :param request: 
-        :param *args: 
-        :param **kwargs: 
+        :param request:
+        :param *args:
+        :param **kwargs:
 
         """
 
@@ -87,8 +87,8 @@ class EmailVerficationView(APIView):
         :param request: The request object
         :param args: The args
         :param kwargs: The keyword args
-        :param *args: 
-        :param **kwargs: 
+        :param *args:
+        :param **kwargs:
         :returns: The response
 
         """
@@ -141,8 +141,8 @@ class LoginView(APIView):
         :param request: The request object
         :param args: The args
         :param kwargs: The keyword args
-        :param *args: 
-        :param **kwargs: 
+        :param *args:
+        :param **kwargs:
         :returns: The response
 
         """

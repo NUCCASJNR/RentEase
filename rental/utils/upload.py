@@ -16,7 +16,7 @@ IMGUR_CLIENT_ID = getenv("IMGUR_CLIENT_ID")
 def resize_image(image, max_width=800, max_height=600):
     """
 
-    :param image: 
+    :param image:
     :param max_width:  (Default value = 800)
     :param max_height:  (Default value = 600)
 
@@ -32,8 +32,8 @@ def resize_image(image, max_width=800, max_height=600):
 def upload_images_to_imgur(images, apartment_id):
     """
 
-    :param images: 
-    :param apartment_id: 
+    :param images:
+    :param apartment_id:
 
     """
     uploaded_images_url = []

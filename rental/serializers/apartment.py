@@ -29,7 +29,7 @@ class ApartmentSerializer(serializers.ModelSerializer):
     def get_image_urls(self, obj):
         """Custom method to get image URLs
 
-        :param obj: 
+        :param obj:
 
         """
         print(obj.id)
