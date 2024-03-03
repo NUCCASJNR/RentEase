@@ -29,8 +29,14 @@ class MainUser(AbstractUser, BaseModel):
         ("Owner", "owner"),
         ("Agent", "agent"),
     )
-    email = models.EmailField(unique=True, max_length=50, null=False, blank=False)
-    username = models.CharField(max_length=50, null=False, blank=False, unique=True)
+    email = models.EmailField(unique=True,
+                              max_length=50,
+                              null=False,
+                              blank=False)
+    username = models.CharField(max_length=50,
+                                null=False,
+                                blank=False,
+                                unique=True)
     password = models.CharField(max_length=150, null=False, blank=False)
     first_name = models.CharField(max_length=50, null=False, blank=False)
     last_name = models.CharField(max_length=50, null=False, blank=False)
