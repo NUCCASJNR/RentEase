@@ -25,22 +25,23 @@ def upload_apartment_images_task(apartment_id, images):
         apartment = Apartment.objects.get(id=apartment_id)
         apartment_images = []
         for image_url in uploaded_images_urls:
-            apartment_images.append(ApartmentImage(
-                apartment=apartment, image_url=image_url))
+            apartment_images.append(
+                ApartmentImage(apartment=apartment, image_url=image_url)
+            )
         ApartmentImage.objects.bulk_create(apartment_images)
         return {
             "message": "Apartment images uploaded successfully",
             "uploaded_images_count": len(uploaded_images_urls),
-            "uploaded_image_urls": uploaded_images_urls
+            "uploaded_image_urls": uploaded_images_urls,
         }
     except Exception as e:
-        logging.error(f'Error uploading apartment images due to: {str(e)}')
-        return {
-            "error": f"Error uploading apartment images: {str(e)}"
-        }
+        logging.error(f"Error uploading apartment images due to: {str(e)}")
+        return {"error": f"Error uploading apartment images: {str(e)}"}
 
 
 @shared_task
 def send_verification_email_async(user, verification_code):
     EmailUtils.send_verification_email(user, verification_code)
+
+
 # Path: rental/utils/tasks.py
