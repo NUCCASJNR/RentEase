@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-
 """Celery task handler"""
-
 import logging
 
 from celery import shared_task
 
-from rental.models.apartment import Apartment, ApartmentImage
+from rental.models.apartment import Apartment
+from rental.models.apartment import ApartmentImage
 from rental.utils.email_utils import EmailUtils
 from rental.utils.upload import upload_images_to_imgur
 

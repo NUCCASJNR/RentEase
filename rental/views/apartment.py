@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-
 """Contains Apartment views"""
-from rest_framework import status, viewsets
+from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from rental.serializers.apartment import Apartment, ApartmentSerializer
+from rental.serializers.apartment import Apartment
+from rental.serializers.apartment import ApartmentSerializer
 from rental.utils.permissions import IsOwner
 from rental.utils.tasks import upload_apartment_images_task
 from RentEase import celery_app

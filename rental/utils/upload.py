@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-
 """Contains image upload utilities"""
-
 import base64
 import io
 from os import getenv
