@@ -1,4 +1,5 @@
 from django.urls import path
+
 from rental.views.auth import EmailVerficationView
 from rental.views.auth import LoginView
 

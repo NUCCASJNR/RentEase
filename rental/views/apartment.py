@@ -1,32 +1,34 @@
 #!/usr/bin/env python3
-
 """Contains Apartment views"""
-from rest_framework import status, viewsets
+from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from RentEase import celery_app
 
-from rental.serializers.apartment import (
-    Apartment,
-    ApartmentSerializer,
-)
+from rental.serializers.apartment import Apartment
+from rental.serializers.apartment import ApartmentSerializer
 from rental.utils.permissions import IsOwner
 from rental.utils.tasks import upload_apartment_images_task
+from RentEase import celery_app
 
 
 class AddApartmentViewset(viewsets.ModelViewSet):
+    """ """
     queryset = Apartment.get_all()
     serializer_class = ApartmentSerializer
     permission_classes = [IsAuthenticated, IsOwner]
 
     def create(self, request, *args, **kwargs):
-        """
-        View for creating apartment
-        @param request: request parameter
-        @param args: request args
-        @param kwargs: request kwrags
-        @return: The details of the apartment created
+        """View for creating apartment
+
+        :param request: request parameter
+        :param args: request args
+        :param kwargs: request kwrags
+        :param *args:
+        :param **kwargs:
+        :returns: The details of the apartment created
+
         """
         serializer = self.serializer_class(data=request.data)
         current_user = request.user
@@ -40,8 +42,10 @@ class AddApartmentViewset(viewsets.ModelViewSet):
             image_path = [image.read() for image in images]
             apartment = Apartment.custom_save(owner=current_user,
                                               **serializer.validated_data)
-            celery_app.send_task('rental.utils.tasks.upload_apartment_images_task',
-                                 args=(str(apartment.id), image_path))
+            celery_app.send_task(
+                "rental.utils.tasks.upload_apartment_images_task",
+                args=(str(apartment.id), image_path),
+            )
             # upload_apartment_images_task.delay(str(apartment.id), image_path)
             return Response({
                 "message": "Apartment added successfully",
@@ -53,11 +57,11 @@ class AddApartmentViewset(viewsets.ModelViewSet):
         })
 
     def update(self, request, *args, **kwargs):
-        """
-        View for updating an apartment
-        @param request:
-        @param args:
-        @param kwargs:
-        @return:
-        """
+        """View for updating an apartment
 
+        :param request: param args:
+        :param kwargs: return:
+        :param *args:
+        :param **kwargs:
+
+        """

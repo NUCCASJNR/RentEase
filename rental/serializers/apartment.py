@@ -14,6 +14,7 @@ class ApartmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         """ """
+
         model = Apartment
         fields = (
             "address",
@@ -22,15 +23,22 @@ class ApartmentSerializer(serializers.ModelSerializer):
             "number_of_bathrooms",
             "price",
             "amenities",
-            "image_urls"
+            "image_urls",
         )
 
     def get_image_urls(self, obj):
-        """Custom method to get image URLs"""
+        """Custom method to get image URLs
+
+        :param obj:
+
+        """
         print(obj.id)
         images = ApartmentImage.objects.filter(apartment=obj.id)
         if images is not None:
-            image_urls = [ApartmentImage.to_dict(image)['image_url'] for image in images]  # Extract URLs of all images
+            # Extract URLs of all images
+            image_urls = [
+                ApartmentImage.to_dict(image)["image_url"] for image in images
+            ]
             return image_urls
         else:
             return []
@@ -41,5 +49,6 @@ class ApartmentImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         """ """
+
         model = ApartmentImage
         fields = ("apartment", "image_url")

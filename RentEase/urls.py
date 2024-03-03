@@ -14,18 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include
+from django.urls import path
 from rest_framework.routers import DefaultRouter
-from rental.views.auth import (
-    SignUpView
-)
+
 from rental.views.apartment import AddApartmentViewset
+from rental.views.auth import SignUpView
+
 #  path('auth/', include(router.urls))
 router = DefaultRouter()
-router.register('auth/signup', SignUpView, basename='signup')
-router.register(r'apartments', AddApartmentViewset, basename='Apartments')
+router.register("auth/signup", SignUpView, basename="signup")
+router.register(r"apartments", AddApartmentViewset, basename="Apartments")
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(router.urls)),
-    path('', include('rental.urls'))
+    path("admin/", admin.site.urls),
+    path("", include(router.urls)),
+    path("", include("rental.urls")),
 ]

@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "drf_yasg",
     "channels",
-    "chat"
+    "chat",
 ]
 ASGI_APPLICATION = "RentEase.asgi.application"
 BASE_URL = "http://localhost:8000"
