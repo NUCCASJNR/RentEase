@@ -7,7 +7,7 @@ import os
 from celery import Celery
 
 # os.environ['DJANGO_SETTINGS_MODULE'] = os.getenv('DJANGO_SETTINGS_MODULE', 'RentEase.settings.dev')
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'RentEase.settings.dev')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'RentEase.settings.production')
 
 
 # Create a Celery instance
