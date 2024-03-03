@@ -41,6 +41,7 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     "http://0.0.0.0:8000",
     "rentease-production.up.railway.app",
+    ".vercel.app",
 ]
 
 # Application definition
