@@ -3,6 +3,7 @@
 """Celery task handler"""
 
 from rental.utils.upload import upload_images_to_imgur
+from rental.utils.email_utils import EmailUtils
 from rental.models.apartment import ApartmentImage, Apartment
 from celery import shared_task
 import logging
@@ -18,19 +19,27 @@ def upload_apartment_images_task(apartment_id, images):
     :param images: The images to upload
     :return: None
     """
-    uploaded_images_url = []
     try:
-        uploaded_images_url = upload_images_to_imgur(images, apartment_id)
-        for image_url in uploaded_images_url:
-            ApartmentImage.custom_save(**{
-                'apartment': Apartment.objects.get(id=apartment_id),
-                'image_url': image_url
-            })
+        uploaded_images_urls = upload_images_to_imgur(images, apartment_id)
+        # Batch save uploaded images
+        apartment = Apartment.objects.get(id=apartment_id)
+        apartment_images = []
+        for image_url in uploaded_images_urls:
+            apartment_images.append(ApartmentImage(apartment=apartment, image_url=image_url))
+        ApartmentImage.objects.bulk_create(apartment_images)
+        return {
+            "message": "Apartment images uploaded successfully",
+            "uploaded_images_count": len(uploaded_images_urls),
+            "uploaded_image_urls": uploaded_images_urls
+        }
     except Exception as e:
         logging.error(f'Error uploading apartment images due to: {str(e)}')
-    return {
-        "message": "Apartment images uploaded successfully",
-        "uploaded_images_count": len(uploaded_images_url),
-        "uploaded_image_urls": uploaded_images_url
-    }
+        return {
+            "error": f"Error uploading apartment images: {str(e)}"
+        }
+
+
+@shared_task
+def send_verification_email_async(user, verification_code):
+    EmailUtils.send_verification_email(user, verification_code)
 # Path: rental/utils/tasks.py

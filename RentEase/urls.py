@@ -17,15 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rental.views.auth import (
-    EmailVerficationView,
     SignUpView
 )
+from rental.views.apartment import AddApartmentViewset
 #  path('auth/', include(router.urls))
 router = DefaultRouter()
-router.register('signup', SignUpView, basename='signup')
-# router.register('verify', EmailVerficationView, basename='verify')
+router.register('auth/signup', SignUpView, basename='signup')
+router.register(r'apartments', AddApartmentViewset, basename='Apartments')
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include(router.urls)),
+    path('', include(router.urls)),
     path('', include('rental.urls'))
 ]

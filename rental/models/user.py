@@ -23,9 +23,9 @@ class MainUser(AbstractUser, BaseModel):
     """
 
     USER_ROLE = (
-        ('tenant', 'Tenant'),
-        ('owner', 'Owner'),
-        ('agent', 'Agent'),
+        ('Tenant', 'tenant'),
+        ('Owner', 'owner'),
+        ('Agent', 'agent'),
     )
     email = models.EmailField(unique=True, max_length=50, null=False, blank=False)
     username = models.CharField(max_length=50, null=False, blank=False, unique=True)
@@ -38,6 +38,9 @@ class MainUser(AbstractUser, BaseModel):
     role = models.CharField(max_length=10, choices=USER_ROLE)
 
     class Meta:
+        indexes = [
+            models.Index(fields=['email', 'username'])
+        ]
         db_table = 'users'
 
     USERNAME_FIELD = 'email'
