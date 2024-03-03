@@ -13,7 +13,7 @@ from rental.models.user import MainUser
 from rental.serializers.auth import EmailVerificationSerializer
 from rental.serializers.auth import LoginSerializer
 from rental.serializers.auth import SignUpSerializer
-from rental.utils.email_utils import EmailUtils
+from rental.utils.tasks import send_verification_email_async, EmailUtils
 from rental.utils.redis_utils import RedisClient
 
 
@@ -24,16 +24,8 @@ class SignUpView(viewsets.ModelViewSet):
     queryset = MainUser.objects.all()
 
     def create(self, request, *args, **kwargs):
-        """Create a new user
+        """Create a new user"""
 
-        :param request: The request object
-        :param args: The args
-        :param kwargs: The keyword args
-        :param *args:
-        :param **kwargs:
-        :returns: The response
-
-        """
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             verification_code = EmailUtils.generate_verification_code()
@@ -42,13 +34,13 @@ class SignUpView(viewsets.ModelViewSet):
             serializer.validated_data["password"] = hashed_password
             user = MainUser.custom_save(**serializer.validated_data,
                                         verification_code=verification_code)
-            EmailUtils.send_verification_email(user, verification_code)
+            send_verification_email_async(user, verification_code)
             return Response({
                 "message":
-                "You have successfully signed up. Please check your"
-                " email for the verification code",
+                    "You have successfully signed up. Please check your"
+                    " email for the verification code",
                 "status":
-                status.HTTP_201_CREATED,
+                    status.HTTP_201_CREATED,
             })
         else:
             errors = serializer.errors
@@ -56,17 +48,17 @@ class SignUpView(viewsets.ModelViewSet):
                 errors = {
                     "error": "User with this email and username already exists",
                     "status": status.HTTP_400_BAD_REQUEST
-                    }
+                }
             if "email" in errors and errors["email"][0] == "main user with this email already exists.":
                 errors = {
                     "error": "User with this email already exists",
                     "status": status.HTTP_400_BAD_REQUEST
-                    }
+                }
             if "username" in errors and errors["username"][0] == "main user with this username already exists.":
                 errors = {
                     "error": "User with this username already exists",
                     "status": status.HTTP_400_BAD_REQUEST
-                    }
+                }
             return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -81,8 +73,6 @@ class EmailVerficationView(APIView):
         :param request: The request object
         :param args: The args
         :param kwargs: The keyword args
-        :param *args:
-        :param **kwargs:
         :returns: The response
 
         """

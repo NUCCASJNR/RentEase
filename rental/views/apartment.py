@@ -5,6 +5,7 @@ from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from RentEase import celery_app
 
 from rental.serializers.apartment import (
     Apartment,
@@ -39,7 +40,9 @@ class AddApartmentViewset(viewsets.ModelViewSet):
             image_path = [image.read() for image in images]
             apartment = Apartment.custom_save(owner=current_user,
                                               **serializer.validated_data)
-            upload_apartment_images_task.delay(str(apartment.id), image_path)
+            celery_app.send_task('rental.utils.tasks.upload_apartment_images_task',
+                                 args=(str(apartment.id), image_path))
+            # upload_apartment_images_task.delay(str(apartment.id), image_path)
             return Response({
                 "message": "Apartment added successfully",
                 "status": status.HTTP_201_CREATED,
@@ -48,4 +51,13 @@ class AddApartmentViewset(viewsets.ModelViewSet):
             "error": serializer.errors,
             "status": status.HTTP_400_BAD_REQUEST
         })
+
+    def update(self, request, *args, **kwargs):
+        """
+        View for updating an apartment
+        @param request:
+        @param args:
+        @param kwargs:
+        @return:
+        """
 
