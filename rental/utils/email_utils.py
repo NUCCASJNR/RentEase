@@ -5,12 +5,9 @@ Handles all utils relating to sending emails and also generating tokens
 """
 from django.conf import settings
 from os import getenv
-import os
 from rental.utils.redis_utils import RedisClient
 from rental.models.user import MainUser as User
 import secrets
-from django.template.loader import render_to_string
-import base64
 import requests
 from dotenv import load_dotenv
 
@@ -113,7 +110,7 @@ class EmailUtils:
         url = "https://api.elasticemail.com/v2/email/send"
         request_payload = {
             "apikey": API_KEY,
-            "from": getenv("EMAIL_SENDER"),
+            "from": SENDER,
             "to": agent.email,
             "subject": "Apartment Assigned",
             "bodyHtml": f"Hello {agent.first_name},<br> You have been assigned an apartment with the following details:"
