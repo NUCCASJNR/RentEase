@@ -29,6 +29,7 @@ class Apartment(BaseModel):
     )
     address = models.CharField(max_length=100, null=False, blank=False)
     owner = models.ForeignKey(MainUser, on_delete=models.CASCADE, related_name='apartments')
+    assigned_agent = models.OneToOneField(MainUser, on_delete=models.SET_NULL, related_name='assigned_apartment')
     description = models.TextField(null=False, blank=False)
     number_of_rooms = models.IntegerField(null=False, blank=False)
     number_of_bathrooms = models.IntegerField(null=False, blank=False)
