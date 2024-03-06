@@ -101,39 +101,34 @@ class EmailUtils:
         except Exception as e:
             print(f'Error sending password reset email to {user.email}: {e}')
             return False
-
+        
     @staticmethod
-    def send_welcome_email(user):
+    def send_assigned_apartment_email(agent, apartment):
+        """
+        Sends an email to the agent when an apartment is assigned to them
+        @param agent: The agent assigned to the aprtment
+        @param apartment: The details of the apartment assigned to the agent
+        @return: True if the email was sent successfully, False otherwise
+        """
         url = "https://api.elasticemail.com/v2/email/send"
-        email_sender = getenv("EMAIL_SENDER")
-        api_key = API_KEY
-
-        # Construct context for rendering the template
-        context = {
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-        }
-
-        # Render the HTML template with the context
-        html_template = render_to_string("parent/index.html", context)
-
-        # Construct email payload
         request_payload = {
-            "apikey": api_key,
-            "from": email_sender,
-            "to": user.email,
-            "subject": "Welcome To FlipToTech",
-            "bodyHtml": html_template,
+            "apikey": API_KEY,
+            "from": getenv("EMAIL_SENDER"),
+            "to": agent.email,
+            "subject": "Apartment Assigned",
+            "bodyHtml": f"Hello {agent.first_name},<br> You have been assigned an apartment with the following details:"
+                        f" <br>" f"Address: {apartment.address}<br>Price: {apartment.price}<br>Number of rooms:"
+                        f" {apartment.number_of_rooms}<br>" f"Number of bathrooms: {apartment.number_of_bathrooms}"
+                        f"<br>Availability status: {apartment.availability_status}<br>",
             "isTransactional": False
         }
-
         try:
             response = requests.post(url, data=request_payload)
             if response.status_code == 200:
                 return True
             else:
-                print(f'Error sending welcome email to {user.email}')
+                print(f'Error sending assigned apartment email to {agent.email}')
                 return False
         except Exception as e:
-            print(f'Error sending welcome email to {user.email}: {e}')
+            print(f'Error sending assigned apartment email to {agent.email}: {e}')
             return False
