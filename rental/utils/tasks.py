@@ -7,6 +7,7 @@ from rental.utils.email_utils import EmailUtils
 from rental.models.apartment import ApartmentImage, Apartment
 from celery import shared_task
 import logging
+from cloudinary.uploader import upload
 
 logger = logging.getLogger(__name__)
 
@@ -40,10 +41,32 @@ def upload_apartment_images_task(apartment_id, images):
 
 
 @shared_task
+def async_upload_images(images, apartment_id):
+    try:
+        upload_results = upload(images)
+        print(upload_results)
+        apartment = Apartment.objects.get(id=apartment_id)
+        apartment_images = []
+        for image_url in upload_results['secure_url']:
+            apartment_images.append(ApartmentImage(apartment=apartment, image=image_url))
+        ApartmentImage.objects.bulk_create(apartment_images)
+        return {
+            "message": "Apartment images uploaded successfully",
+            "uploaded_image_count": len(upload_results),
+            "uploaded_image_urls": upload_results
+        }
+    except Exception as e:
+        logging.error(f'Error uploading apartment images due to: {str(e)}')
+        return {
+            "error": f"Error uploading apartment images: {str(e)}"
+        }
+
+
+@shared_task
 def send_verification_email_async(user, verification_code):
     EmailUtils.send_verification_email(user, verification_code)
 
 
 @shared_task
-def send_assigned_apartment_email_async(agent, apartment):
-    EmailUtils.send_assigned_apartment_email(agent, apartment)
+def send_assigned_apartment_email_async(email, username, apartment_details):
+    EmailUtils.send_assigned_apartment_email(email, username, apartment_details)

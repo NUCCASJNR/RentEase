@@ -98,28 +98,31 @@ class EmailUtils:
         except Exception as e:
             print(f'Error sending password reset email to {user.email}: {e}')
             return False
-        
+
     @staticmethod
-    def send_assigned_apartment_email(agent, apartment):
+    def send_assigned_apartment_email(agent_email, agent_username, apartment_details):
         """
-        Sends an email to the agent when an apartment is assigned to them
-        @param agent: The agent assigned to the aprtment
-        @param apartment: The details of the apartment assigned to the agent
+        Sends an email to the agent when an apartment is assigned to them asynchronously
+        @param agent_email: The email address of the agent
+        @param agent_username: The username of the agent
+        @param apartment_details: The details of the apartment assigned to the agent
         @return: True if the email was sent successfully, False otherwise
         """
-        url = "https://api.elasticemail.com/v2/email/send"
-        request_payload = {
-            "apikey": API_KEY,
-            "from": SENDER,
-            "to": agent.email,
-            "subject": "Apartment Assigned",
-            "bodyHtml": f"Hello {agent.first_name},<br> You have been assigned an apartment with the following details:"
-                        f" <br>" f"Address: {apartment.address}<br>Price: {apartment.price}<br>Number of rooms:"
-                        f" {apartment.number_of_rooms}<br>" f"Number of bathrooms: {apartment.number_of_bathrooms}"
-                        f"<br>Availability status: {apartment.availability_status}<br>",
-            "isTransactional": False
-        }
         try:
+            url = "https://api.elasticemail.com/v2/email/send"
+            request_payload = {
+                "apikey": API_KEY,
+                "from": SENDER,
+                "to": agent_email,
+                "subject": "Apartment Assigned",
+                "bodyHtml": f"Hello {agent_username},<br> You have been assigned an apartment with the following "
+                            f"details:"
+                            f" <br>" f"Address: {apartment_details['address']}<br>Price: {apartment_details['price']}<br>"
+                            f"Number of rooms: {apartment_details['number_of_rooms']}<br>"
+                            f"Number of bathrooms: {apartment_details['number_of_bathrooms']}<br>"
+                            f"Availability status: {apartment_details['availability_status']}<br>",
+                "isTransactional": False
+            }
             response = requests.post(url, data=request_payload)
             if response.status_code == 200 and response.json()['success']:
                 return True
@@ -129,3 +132,4 @@ class EmailUtils:
         except Exception as e:
             print(f'Error sending assigned apartment email to {agent.email}: {e}')
             return False
+

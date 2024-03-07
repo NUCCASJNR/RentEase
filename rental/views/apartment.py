@@ -29,23 +29,35 @@ class AddApartmentViewset(viewsets.ModelViewSet):
         @return: The details of the apartment created
         """
         serializer = self.serializer_class(data=request.data)
+        print(serializer.initial_data)
         current_user = request.user
         if serializer.is_valid():
+            print(serializer.validated_data)
             images = request.FILES.getlist("images")
             if len(images) > 5:
                 return Response({
                     "error": "You can only add a maximum of 5 images",
                     "status": status.HTTP_400_BAD_REQUEST,
                 })
-            agent = serializer.validated_data.get('assigned_agent')
-            agent_id = User.custom_get(email=agent).id
+            agent = User.custom_get(email=serializer.validated_data.get('agent_assigned'))
+            serializer.validated_data.pop('agent_assigned')
             image_path = [image.read() for image in images]
             apartment = Apartment.custom_save(owner=current_user,
-                                              **serializer.validated_data, assigned_agent_id=agent_id)
+                                              **serializer.validated_data, assigned_agent_id=agent.id)
+            apartment_id = apartment.id
+            agent_email = agent.email
+            agent_username = agent.username
+            apartment_details = {
+                'address': apartment.address,
+                'price': apartment.price,
+                'number_of_rooms': apartment.number_of_rooms,
+                'number_of_bathrooms': apartment.number_of_bathrooms,
+                'availability_status': apartment.availability_status,
+            }
             celery_app.send_task('rental.utils.tasks.send_assigned_apartment_email_async',
-                                 args=(agent, apartment))
-            celery_app.send_task('rental.utils.tasks.upload_apartment_images_task',
-                                 args=(str(apartment.id), image_path))
+                                 args=(agent_email, agent_username, apartment_details))
+            celery_app.send_task('rental.utils.tasks.async_upload_images',
+                                 args=(str(apartment_id), image_path))
             return Response({
                 "message": "Apartment added successfully",
                 "status": status.HTTP_201_CREATED,

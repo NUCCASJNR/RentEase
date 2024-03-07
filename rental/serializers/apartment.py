@@ -10,7 +10,7 @@ class ApartmentSerializer(serializers.ModelSerializer):
     """The apartment serializer"""
 
     amenities = serializers.JSONField(required=False)
-    agent_assigned = serializers.SerializerMethodField()
+    agent_assigned = serializers.EmailField(required=True)
     image_urls = serializers.SerializerMethodField()
 
     class Meta:
@@ -23,7 +23,8 @@ class ApartmentSerializer(serializers.ModelSerializer):
             "number_of_bathrooms",
             "price",
             "amenities",
-            "image_urls"
+            "image_urls",
+            "agent_assigned",
         )
 
     def get_image_urls(self, obj):
@@ -36,17 +37,17 @@ class ApartmentSerializer(serializers.ModelSerializer):
         else:
             return []
 
-    def get_agent_assigned(self, obj):
-        """Custom method to get the agent assigned to the apartment"""
-        agent = obj.assigned_agent
-        if agent is not None:
-            return {
-                "email": agent.email,
-                "first_name": agent.first_name,
-                "last_name": agent.last_name
-            }
-        else:
-            return None
+    # def get_agent_assigned(self, obj):
+    #     """Custom method to get the agent assigned to the apartment"""
+    #     agent = obj.assigned_agent
+    #     if agent is not None:
+    #         return {
+    #             "email": agent.email,
+    #             "first_name": agent.first_name,
+    #             "last_name": agent.last_name
+    #         }
+    #     else:
+    #         return None
 
 
 class ApartmentImageSerializer(serializers.ModelSerializer):
@@ -55,4 +56,4 @@ class ApartmentImageSerializer(serializers.ModelSerializer):
     class Meta:
         """ """
         model = ApartmentImage
-        fields = ("apartment", "image_url")
+        fields = ("apartment", "image")
