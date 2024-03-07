@@ -42,4 +42,8 @@ def upload_apartment_images_task(apartment_id, images):
 @shared_task
 def send_verification_email_async(user, verification_code):
     EmailUtils.send_verification_email(user, verification_code)
-# Path: rental/utils/tasks.py
+
+
+@shared_task
+def send_assigned_apartment_email_async(agent, apartment):
+    EmailUtils.send_assigned_apartment_email(agent, apartment)

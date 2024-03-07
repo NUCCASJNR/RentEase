@@ -18,7 +18,7 @@ def resize_image(image, max_width=800, max_height=600):
     img = Image.open(image)
     img.thumbnail((max_width, max_height), Image.ANTIALIAS)
     output = io.BytesIO()
-    img.save(output, format='JPEG')  # You can choose the desired format here
+    img.save(output, format='JPEG')
     output.seek(0)
     return output
 
@@ -32,6 +32,8 @@ def upload_images_to_imgur(images, apartment_id):
     for image in images:
         resized_image = resize_image(image)
         image_base64 = base64.b64encode(resized_image.read()).decode('utf-8')
+        if '\x00' in image_base64:
+            raise ValueError("Image contains null byte(s)")
         request_payload = {
             "image": image_base64,
             "type": "base64",

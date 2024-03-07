@@ -4,8 +4,8 @@
 Contains the apartment model for the rental app
 """
 
-
 from rental.models.user import MainUser, BaseModel, models
+from cloudinary.models import CloudinaryField
 
 
 def apartment_image_path(instance, filename):
@@ -29,8 +29,8 @@ class Apartment(BaseModel):
     )
     address = models.CharField(max_length=100, null=False, blank=False)
     owner = models.ForeignKey(MainUser, on_delete=models.CASCADE, related_name='apartments')
-    assigned_agent = models.OneToOneField(MainUser, on_delete=models.SET_NULL,
-                                          related_name='assigned_apartment', null=True)
+    assigned_agent = models.ForeignKey(MainUser, on_delete=models.SET_NULL,
+                                       related_name='assigned_apartment', null=True)
     description = models.TextField(null=False, blank=False)
     number_of_rooms = models.IntegerField(null=False, blank=False)
     number_of_bathrooms = models.IntegerField(null=False, blank=False)
@@ -47,7 +47,7 @@ class ApartmentImage(BaseModel):
     The apartment image model
     """
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='images')
-    image_url = models.URLField(null=False, blank=False)
+    image = CloudinaryField('image', null=True, blank=True)
     is_video = models.BooleanField(default=False)
 
     class Meta:

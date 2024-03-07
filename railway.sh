@@ -1,1 +1,1 @@
-gunicorn RentEase.wsgi --log-file - && celery -A RentEase worker --loglevel=INFO
+python3 manage.py runserver - && celery -A RentEase worker --loglevel=INFO

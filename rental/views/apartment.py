@@ -6,13 +6,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from RentEase import celery_app
+from rental.models.user import MainUser as User
 
 from rental.serializers.apartment import (
     Apartment,
     ApartmentSerializer,
 )
 from rental.utils.permissions import IsOwner
-from rental.utils.tasks import upload_apartment_images_task
 
 
 class AddApartmentViewset(viewsets.ModelViewSet):
@@ -37,12 +37,15 @@ class AddApartmentViewset(viewsets.ModelViewSet):
                     "error": "You can only add a maximum of 5 images",
                     "status": status.HTTP_400_BAD_REQUEST,
                 })
+            agent = serializer.validated_data.get('assigned_agent')
+            agent_id = User.custom_get(email=agent).id
             image_path = [image.read() for image in images]
             apartment = Apartment.custom_save(owner=current_user,
-                                              **serializer.validated_data)
+                                              **serializer.validated_data, assigned_agent_id=agent_id)
+            celery_app.send_task('rental.utils.tasks.send_assigned_apartment_email_async',
+                                 args=(agent, apartment))
             celery_app.send_task('rental.utils.tasks.upload_apartment_images_task',
                                  args=(str(apartment.id), image_path))
-            # upload_apartment_images_task.delay(str(apartment.id), image_path)
             return Response({
                 "message": "Apartment added successfully",
                 "status": status.HTTP_201_CREATED,

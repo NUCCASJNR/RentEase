@@ -121,7 +121,7 @@ class EmailUtils:
         }
         try:
             response = requests.post(url, data=request_payload)
-            if response.status_code == 200:
+            if response.status_code == 200 and response.json()['success']:
                 return True
             else:
                 print(f'Error sending assigned apartment email to {agent.email}')
