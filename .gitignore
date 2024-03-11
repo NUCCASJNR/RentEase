@@ -15,3 +15,5 @@ rental/serializers/__pycache__
 chat/__pycache__
 chat/migrations/__pycache__
 chat/models/__pycache__
+celery.log
+rt.py

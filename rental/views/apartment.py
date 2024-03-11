@@ -34,6 +34,7 @@ class AddApartmentViewset(viewsets.ModelViewSet):
         if serializer.is_valid():
             print(serializer.validated_data)
             images = request.FILES.getlist("images")
+            print(images)
             if len(images) > 5:
                 return Response({
                     "error": "You can only add a maximum of 5 images",
@@ -41,7 +42,7 @@ class AddApartmentViewset(viewsets.ModelViewSet):
                 })
             agent = User.custom_get(email=serializer.validated_data.get('agent_assigned'))
             serializer.validated_data.pop('agent_assigned')
-            image_path = [image.read() for image in images]
+            # image_path = [image.read() for image in images]
             apartment = Apartment.custom_save(owner=current_user,
                                               **serializer.validated_data, assigned_agent_id=agent.id)
             apartment_id = apartment.id
@@ -56,8 +57,12 @@ class AddApartmentViewset(viewsets.ModelViewSet):
             }
             celery_app.send_task('rental.utils.tasks.send_assigned_apartment_email_async',
                                  args=(agent_email, agent_username, apartment_details))
-            celery_app.send_task('rental.utils.tasks.async_upload_images',
-                                 args=(str(apartment_id), image_path))
+            for image in images:
+                image_content = image.read()
+                celery_app.send_task('rental.utils.tasks.async_upload_images',
+                                     args=(image_content, str(apartment_id)))
+            # celery_app.send_task('rental.utils.tasks.async_upload_images',
+            #                      args=(image_path, str(apartment_id)))
             return Response({
                 "message": "Apartment added successfully",
                 "status": status.HTTP_201_CREATED,

@@ -43,13 +43,19 @@ def upload_apartment_images_task(apartment_id, images):
 @shared_task
 def async_upload_images(images, apartment_id):
     try:
-        upload_results = upload(images)
-        print(upload_results)
+        upload_results = []
+        for image_content in images:
+            print(image_content)
+            result = upload(image_content)
+            print(f'Image uploaded: {result}')
+            upload_results.append(result)
         apartment = Apartment.objects.get(id=apartment_id)
         apartment_images = []
-        for image_url in upload_results['secure_url']:
-            apartment_images.append(ApartmentImage(apartment=apartment, image=image_url))
-        ApartmentImage.objects.bulk_create(apartment_images)
+        for result in upload_results:
+            for image_url in result['secure_url']:
+                apartment_images.append(ApartmentImage(apartment=apartment, image=image_url))
+                print(f'Apartment image created: {image_url}')
+            ApartmentImage.objects.bulk_create(apartment_images)
         return {
             "message": "Apartment images uploaded successfully",
             "uploaded_image_count": len(upload_results),
