@@ -7,7 +7,7 @@ class IsOwner(BasePermission):
     """
 
     def has_permission(self, request, view):
-        return request.user.role == 'owner'
+        return request.user.role == 'Owner'
 
 
 class IsTenant(BasePermission):
@@ -16,7 +16,7 @@ class IsTenant(BasePermission):
     """
 
     def has_permission(self, request, view):
-        return request.user.role == 'tenant'
+        return request.user.role == 'Tenant'
 
 
 class IsAgent(BasePermission):
@@ -25,4 +25,4 @@ class IsAgent(BasePermission):
     """
 
     def has_permission(self, request, view):
-        return request.user.role == 'agent'
+        return request.user.role == 'Agent'

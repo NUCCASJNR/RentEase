@@ -17,3 +17,7 @@ chat/migrations/__pycache__
 chat/models/__pycache__
 celery.log
 rt.py
+.clj-kondo
+.lsp
+app.log
+task.log
