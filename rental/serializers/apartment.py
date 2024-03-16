@@ -32,12 +32,11 @@ class ApartmentSerializer(serializers.ModelSerializer):
         images = ApartmentImage.objects.filter(apartment=obj.id)
         if images.exists():
             print([ApartmentImage.to_dict(image) for image in images])
-            image_urls = [ApartmentImage.to_dict(image)['image'] for image in images]
+            image_urls = [ApartmentImage.to_dict(image)['url'] for image in images]
             return image_urls
         else:
             return []
-
-
+        
 
 
 class ApartmentImageSerializer(serializers.ModelSerializer):
