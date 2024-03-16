@@ -13,8 +13,7 @@ class Booking(BaseModel):
     """
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='bookings')
     user = models.ForeignKey(MainUser, on_delete=models.CASCADE, related_name='bookings')
-    start_date = models.DateTimeField(null=False, blank=False)
-    end_date = models.DateTimeField(null=False, blank=False)
+    date = models.DateTimeField(null=False, blank=False)
     status = models.CharField(max_length=10, default='pending')
 
     class Meta:

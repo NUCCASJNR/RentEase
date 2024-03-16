@@ -11,7 +11,7 @@ class ApartmentReview(BaseModel):
     The apartment review model
     """
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='reviews')
-    user = models.ForeignKey(MainUser, on_delete=models.CASCADE, related_name='reviews')
+    agent = models.ForeignKey(MainUser, on_delete=models.CASCADE, related_name='reviews')
     review = models.TextField(null=False, blank=False)
     rating = models.IntegerField(null=False, blank=False)
 
