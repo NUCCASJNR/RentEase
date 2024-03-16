@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 from rental.models.apartment import Apartment
 from rental.models.apartment import ApartmentImage
-
+from rental.models.booking import Booking
 
 class ApartmentSerializer(serializers.ModelSerializer):
     """The apartment serializer"""
@@ -48,3 +48,13 @@ class ApartmentImageSerializer(serializers.ModelSerializer):
         """ """
         model = ApartmentImage
         fields = ("apartment", "image")
+
+
+
+
+class BookingSerializer(serializers.ModelSerializer):
+    apartment = serializers.UUIDField(required=True)
+
+    class Meta:
+        model = Booking
+        fields = ('date', 'apartment')
