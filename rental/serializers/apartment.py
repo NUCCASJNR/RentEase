@@ -12,6 +12,7 @@ class ApartmentSerializer(serializers.ModelSerializer):
     amenities = serializers.JSONField(required=False)
     agent = serializers.EmailField(required=True)
     images = serializers.SerializerMethodField()
+    id = serializers.UUIDField(read_only=True)
 
     class Meta:
         """ """
@@ -24,7 +25,8 @@ class ApartmentSerializer(serializers.ModelSerializer):
             "price",
             "amenities",
             "images",
-            "agent"
+            "agent",
+            "id"
         )
 
     def get_images(self, obj):
