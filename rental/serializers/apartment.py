@@ -31,12 +31,12 @@ class ApartmentSerializer(serializers.ModelSerializer):
         """Custom method to get image"""
         images = ApartmentImage.objects.filter(apartment=obj.id)
         if images.exists():
-            print([ApartmentImage.to_dict(image) for image in images])
-            image_urls = [ApartmentImage.to_dict(image)['url'] for image in images]
+            image_styles = [image.style() for image in images]
+            image_urls = [image_style['image_url'] for image_style in image_styles]
             return image_urls
         else:
             return []
-        
+
 
 
 class ApartmentImageSerializer(serializers.ModelSerializer):

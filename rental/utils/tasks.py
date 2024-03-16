@@ -2,7 +2,7 @@
 
 """Celery task handler"""
 
-from rental.utils.upload import upload_images_to_imgur
+
 from rental.utils.email_utils import EmailUtils
 from rental.models.apartment import ApartmentImage, Apartment
 from celery import shared_task
@@ -27,7 +27,7 @@ def async_upload_images(images, apartment_id):
         apartment = Apartment.objects.get(id=apartment_id)
         apartment_images = []
         for result in upload_results:
-            apartment_images.append(ApartmentImage(apartment=apartment, image=result['secure_url']))
+            apartment_images.append(ApartmentImage(apartment=apartment, image=result))
             logger.info(f"Apartment image created: {result['secure_url']}")
         ApartmentImage.objects.bulk_create(apartment_images)
         return {

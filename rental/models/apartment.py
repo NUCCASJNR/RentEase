@@ -40,6 +40,8 @@ class Apartment(BaseModel):
 
     class Meta:
         db_table = 'apartments'
+    
+    
 
 
 class ApartmentImage(BaseModel):
@@ -52,3 +54,11 @@ class ApartmentImage(BaseModel):
 
     class Meta:
         db_table = 'apartment_images'
+    
+    def style(self):
+        """Convert the ApartmentImage object to a dictionary"""
+        return {
+            'image_url': self.image.url if self.image else None,
+            'is_video': self.is_video,
+            # Add other fields as needed
+        }
