@@ -127,9 +127,44 @@ class EmailUtils:
             if response.status_code == 200 and response.json()['success']:
                 return True
             else:
-                print(f'Error sending assigned apartment email to {agent.email}')
+                print(f'Error sending assigned apartment email to {agent_email}')
                 return False
         except Exception as e:
-            print(f'Error sending assigned apartment email to {agent.email}: {e}')
+            print(f'Error sending assigned apartment email to {agent_email}: {e}')
             return False
-
+        
+    @staticmethod
+    def send_owner_book_review_mail(owner_email: str, agent_email: str, date, apartment_details):
+        """
+        Sends email to the agent in charge of an apartment when the owner book
+        a review
+        @param owner_email: The email address of the owner
+        @param agent_email: The email address of the agent
+        @param date: The date of the review
+        @param apartment_details: The details of the apartment
+        @return: True if the email was sent successfully, False otherwise
+        """
+        try:
+            url = "https://api.elasticemail.com/v2/email/send"
+            request_payload = {
+                "apikey": API_KEY,
+                "from": SENDER,
+                "to": agent_email,
+                "subject": "Review Booked",
+                "bodyHtml": f"Hello, <br> The owner of the apartment with the following details has booked a review for "
+                            f"the apartment:<br>"
+                            f"Address: {apartment_details['address']}<br>Price: {apartment_details['price']}<br>"
+                            f"Number of rooms: {apartment_details['number_of_rooms']}<br>"
+                            f"Number of bathrooms: {apartment_details['number_of_bathrooms']}<br>"
+                            f"Review date: {date}<br>",
+                "isTransactional": False
+            }
+            response = requests.post(url, data=request_payload)
+            if response.status_code == 200 and response.json()['success']:
+                return True
+            else:
+                print(f'Error sending review booked email to {agent_email}')
+                return False
+        except Exception as e:
+            print(f'Error sending review booked email to {agent_email}: {e}')
+            return False
