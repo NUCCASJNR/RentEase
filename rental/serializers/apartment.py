@@ -58,3 +58,4 @@ class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
         fields = ('date', 'apartment')
+

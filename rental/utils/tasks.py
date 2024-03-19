@@ -4,7 +4,9 @@
 
 
 from rental.utils.email_utils import EmailUtils
-from rental.models.apartment import ApartmentImage, Apartment
+from rental.models.apartment import ( ApartmentImage,
+                                     Apartment
+)
 from celery import shared_task
 import logging
 from cloudinary.uploader import upload
@@ -50,3 +52,9 @@ def send_verification_email_async(user, verification_code):
 @shared_task
 def send_assigned_apartment_email_async(email, username, apartment_details):
     EmailUtils.send_assigned_apartment_email(email, username, apartment_details)
+
+
+@shared_task
+def send_review_email_async(owner_email, agent_email, date, details):
+    EmailUtils.send_owner_book_review_mail(owner_email, agent_email, date, details)
+

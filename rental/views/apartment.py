@@ -65,12 +65,3 @@ class AddApartmentViewset(viewsets.ModelViewSet):
             "status": status.HTTP_400_BAD_REQUEST
         })
 
-    def update(self, request, *args, **kwargs):
-        """
-        View for updating an apartment
-        @param request:
-        @param args:
-        @param kwargs:
-        @return:
-        """
-
