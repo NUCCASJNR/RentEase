@@ -19,11 +19,12 @@ from rest_framework.routers import DefaultRouter
 from rental.views.auth import (
     SignUpView
 )
-from rental.views.apartment import AddApartmentViewset
+from rental.views.apartment import AddApartmentViewset, BookApartmentReviewViewset
 #  path('auth/', include(router.urls))
 router = DefaultRouter()
 router.register('auth/signup', SignUpView, basename='signup')
 router.register(r'apartments', AddApartmentViewset, basename='Apartments')
+router.register(r'bookings', BookApartmentReviewViewset, basename='Bookings')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),

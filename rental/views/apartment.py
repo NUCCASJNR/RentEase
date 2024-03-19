@@ -7,11 +7,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from RentEase import celery_app
 from rental.models.user import MainUser as User
-from rental.utils.tasks import async_upload_images
+from rental.utils.tasks import send_review_email_async
 
 from rental.serializers.apartment import (
     Apartment,
     ApartmentSerializer,
+    BookingSerializer,
+    Booking
 )
 from rental.utils.permissions import IsOwner
 
@@ -65,3 +67,45 @@ class AddApartmentViewset(viewsets.ModelViewSet):
             "status": status.HTTP_400_BAD_REQUEST
         })
 
+
+class BookApartmentReviewViewset(viewsets.ModelViewSet):
+    """
+    Viewset for owner to book review
+    """
+    queryset = Booking.get_all()
+    permission_classes = [IsAuthenticated, IsOwner]
+    serializer_class = BookingSerializer
+
+    def create(self, request, *args, **kwargs):
+        """
+        View for owner to book a review for their apartment
+        @param request: request parameter
+        @param args: request args
+        @param kwargs: request kwargs
+        @return: The details of review booked
+        """
+        serializer = self.serializer_class(data=request.data)
+        current_user = request.user
+        if serializer.is_valid():
+            apartment_id = serializer.validated_data.get('apartment')
+            date = serializer.validated_data.get('date')
+            agent_email = Apartment.objects.get(id=apartment_id).agent.email
+            serializer.validated_data['apartment'] = Apartment.objects.get(id=apartment_id)
+            booking = Booking.custom_save(user=current_user, **serializer.validated_data)
+            apartment_details = {
+                'address': booking.apartment.address,
+                'price': booking.apartment.price,
+                'number_of_rooms': booking.apartment.number_of_rooms,
+                'number_of_bathrooms': booking.apartment.number_of_bathrooms,
+                'date': booking.date,  
+            }
+            # Send agent in charge an email asynchronously
+            send_review_email_async.delay(current_user.email, agent_email, date, apartment_details)
+            return Response({
+                "message": "Review booked successfully",
+                "status": status.HTTP_201_CREATED,
+            })
+        return Response({
+            "error": serializer.errors,
+            "status": status.HTTP_400_BAD_REQUEST
+        })

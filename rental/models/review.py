@@ -3,7 +3,7 @@
 """Contains the report model for the rental app"""
 
 from rental.models.user import BaseModel, models, MainUser
-from rental.models.apartment import Apartment
+from rental.models.booking import Apartment, Booking
 
 
 class ApartmentReview(BaseModel):
@@ -14,6 +14,8 @@ class ApartmentReview(BaseModel):
     agent = models.ForeignKey(MainUser, on_delete=models.CASCADE, related_name='reviews')
     review = models.TextField(null=False, blank=False)
     rating = models.IntegerField(null=False, blank=False)
+    book = models.ForeignKey(Booking, on_delete=models.CASCADE)
+    
 
     class Meta:
         db_table = 'apartment_reviews'
