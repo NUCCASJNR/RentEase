@@ -134,7 +134,7 @@ class EmailUtils:
             return False
         
     @staticmethod
-    def send_owner_book_review_mail(owner_email: str, agent_email: str, date, apartment_details):
+    def send_owner_book_review_mail(agent_email: str, apartment_details):
         """
         Sends email to the agent in charge of an apartment when the owner book
         a review
@@ -156,7 +156,7 @@ class EmailUtils:
                             f"Address: {apartment_details['address']}<br>Price: {apartment_details['price']}<br>"
                             f"Number of rooms: {apartment_details['number_of_rooms']}<br>"
                             f"Number of bathrooms: {apartment_details['number_of_bathrooms']}<br>"
-                            f"Review date: {date}<br>",
+                            f"Review date: {apartment_details['date']}<br>",
                 "isTransactional": False
             }
             response = requests.post(url, data=request_payload)

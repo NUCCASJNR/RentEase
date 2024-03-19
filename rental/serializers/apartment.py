@@ -53,12 +53,17 @@ class ApartmentImageSerializer(serializers.ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
-    apartment = serializers.SerializerMethodField()
+    apartment = serializers.UUIDField(write_only=True)
+    apartment_details = serializers.SerializerMethodField(required=False)
 
     class Meta:
         model = Booking
-        fields = ('date', 'apartment')
+        fields = ('date', 'apartment', 'apartment_details')
     
-    def get_apartment(self, obj):
-        apartment = Apartment.objects.get(id=obj.apartment.id)
-        return ApartmentSerializer(apartment).data
+    def get_apartment_details(self, obj):
+        apartment_id = obj.apartment
+        try:
+            apartment = Apartment.objects.get(id=apartment_id.id)
+            return ApartmentSerializer(apartment).data
+        except Apartment.DoesNotExist:
+            return None

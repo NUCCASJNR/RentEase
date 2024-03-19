@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from RentEase import celery_app
 from rental.models.user import MainUser as User
 from rental.utils.tasks import send_review_email_async
+from datetime import datetime
 
 from rental.serializers.apartment import (
     Apartment,
@@ -88,7 +89,6 @@ class BookApartmentReviewViewset(viewsets.ModelViewSet):
         current_user = request.user
         if serializer.is_valid():
             apartment_id = serializer.validated_data.get('apartment')
-            date = serializer.validated_data.get('date')
             agent_email = Apartment.objects.get(id=apartment_id).agent.email
             serializer.validated_data['apartment'] = Apartment.objects.get(id=apartment_id)
             booking = Booking.custom_save(user=current_user, **serializer.validated_data)
@@ -97,10 +97,11 @@ class BookApartmentReviewViewset(viewsets.ModelViewSet):
                 'price': booking.apartment.price,
                 'number_of_rooms': booking.apartment.number_of_rooms,
                 'number_of_bathrooms': booking.apartment.number_of_bathrooms,
-                'date': booking.date,  
+                'date': booking.date.strftime('%B %d, %Y')
             }
-            # Send agent in charge an email asynchronously
-            send_review_email_async.delay(current_user.email, agent_email, date, apartment_details)
+            print(apartment_details['date'])
+
+            send_review_email_async.delay(agent_email, apartment_details)
             return Response({
                 "message": "Review booked successfully",
                 "status": status.HTTP_201_CREATED,

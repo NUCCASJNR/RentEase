@@ -55,6 +55,6 @@ def send_assigned_apartment_email_async(email, username, apartment_details):
 
 
 @shared_task
-def send_review_email_async(owner_email, agent_email, date, details):
-    EmailUtils.send_owner_book_review_mail(owner_email, agent_email, date, details)
+def send_review_email_async(agent_email, details):
+    EmailUtils.send_owner_book_review_mail(agent_email, details)
 
